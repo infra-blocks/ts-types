@@ -1,5 +1,5 @@
 {
-  "name": "@infra-blocks/ts-types",
+  "name": "@infra-blocks/types",
   "version": "0.0.0",
   "description": "Typescript types utility package.",
   "exports": "./lib/index.js",
