@@ -9,7 +9,7 @@ import {
   TransitivePartial,
   KeyOfType,
 } from "../../src/index.js";
-import { expect } from "../lib/configured-expect.js";
+import { expect } from "@infra-blocks/test";
 
 describe("types", function () {
   describe("UnpackedArray", function () {
