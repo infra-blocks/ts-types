@@ -8,6 +8,7 @@ import {
   ErrorHandler,
   TransitivePartial,
   KeyOfType,
+  Provider,
 } from "../../src/index.js";
 import { expect } from "@infra-blocks/test";
 
@@ -25,6 +26,12 @@ describe("types", function () {
       const promise = Promise.resolve("one");
       const myStuff: UnpackedPromise<typeof promise> = "two";
       expect(isString(myStuff)).to.be.true;
+    });
+  });
+  describe("Provider", function () {
+    it("should compile for a function without argument", function () {
+      const func: Provider<string> = () => "toto";
+      expect(func()).to.equal("toto");
     });
   });
   describe("ErrorHandler", function () {
