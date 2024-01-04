@@ -11,6 +11,11 @@ export type Nullable<T> = T | null | undefined;
 export type Predicate<T> = (item: T) => boolean;
 
 /**
+ * A type alias for functions that return a value of a given type without arguments.
+ */
+export type Provider<T> = () => T;
+
+/**
  * A convenient type declaration for handlers used to resolve "error" type events.
  */
 export type ErrorHandler<T extends Error = Error> = (err: T) => void;
