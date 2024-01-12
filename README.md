@@ -1,6 +1,6 @@
 # ts-types
 
-Small types utility library for Typescript.
+Types utility library for Typescript.
 
 ## Development
 
