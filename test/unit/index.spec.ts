@@ -1,18 +1,54 @@
+import { expect } from "@infra-blocks/test";
 import {
+  Callable,
+  ErrorHandler,
+  isFunction,
   isNumber,
   isString,
   isSymbol,
-  isFunction,
-  UnpackedArray,
-  UnpackedPromise,
-  ErrorHandler,
-  TransitivePartial,
   KeyOfType,
   Provider,
+  TransitivePartial,
+  UnpackedArray,
+  UnpackedPromise,
 } from "../../src/index.js";
-import { expect } from "@infra-blocks/test";
 
 describe("types", function () {
+  // These tests are just checking compilation.
+  describe("Callable", function () {
+    it("should work for a function without arguments and with no returns", function () {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const func: Callable = () => {
+        return;
+      };
+    });
+    it("should work for a function that throws", function () {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const func: Callable = (): never => {
+        throw new Error("woopsy");
+      };
+    });
+    it("should work for a regular function", function () {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const func: Callable = (
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        arg1: string,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        arg2: number
+      ): { hello: string } => {
+        return {
+          hello: "pal",
+        };
+      };
+    });
+    it("should work for a callable type", function () {
+      type Test = {
+        (...args: string[]): void;
+      };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
+      const test: Callable = ((hello: string) => {}) as Test;
+    });
+  });
   describe("UnpackedArray", function () {
     // The tests here just showcase the good use cases when it compiles.
     it("should work for an array of string", function () {

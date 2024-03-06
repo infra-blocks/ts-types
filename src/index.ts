@@ -1,4 +1,10 @@
 /**
+ * Convenient type to easily represent "callable" types and to avoid using
+ * "any" in client code.
+ */
+export type Callable = (...args: never[]) => unknown;
+
+/**
  * Convenient type alias to regroup a type that can be T, null or undefined.
  *
  * Semantically the opposite of {@link NonNullable}.
