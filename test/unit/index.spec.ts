@@ -1,6 +1,7 @@
 import { expect } from "@infra-blocks/test";
 import {
   Callable,
+  Constructor,
   ErrorHandler,
   isFunction,
   isNumber,
@@ -14,7 +15,8 @@ import {
 } from "../../src/index.js";
 
 describe("types", function () {
-  // These tests are just checking compilation.
+  // A lot of the tests here just check for compilation, so we have a bunch of unused variables.
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   describe("Callable", function () {
     it("should work for a function without arguments and with no returns", function () {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -47,6 +49,36 @@ describe("types", function () {
       };
       // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
       const test: Callable = ((hello: string) => {}) as Test;
+    });
+  });
+  describe("Constructor", function () {
+    it("basic type constructors should be assignable", function () {
+      const numberConstructor: Constructor = Number;
+      const stringConstructor: Constructor = String;
+      const booleanConstructor: Constructor = Boolean;
+      const arrayConstructor: Constructor = Array;
+      const objectConstructor: Constructor = Object;
+      const functionConstructor: Constructor = Function;
+    });
+    it("should work with a class", function () {
+      class MyClass {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        constructor(left: number, right: string) {}
+      }
+      // Works without type hints.
+      let constructor = MyClass;
+      // Or with.
+      constructor = MyClass as Constructor<MyClass>;
+      constructor = MyClass as Constructor<MyClass, [number, string]>;
+    });
+    it("should work with mixins", function () {
+      function bigMixin(Base: Constructor) {
+        return class MixedUp extends Base {
+          getName() {
+            return "eeee wut?";
+          }
+        };
+      }
     });
   });
   describe("UnpackedArray", function () {
@@ -133,6 +165,7 @@ describe("types", function () {
       func("z");
     });
   });
+  /* eslint-enable @typescript-eslint/no-unused-vars */
   describe("isString", function () {
     it("should return false for undefined", function () {
       expect(isString(undefined)).to.be.false;
