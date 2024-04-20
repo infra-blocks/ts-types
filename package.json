@@ -1,7 +1,13 @@
 {
+<<<<<<< HEAD
   "name": "@infra-blocks/types",
   "version": "0.5.3",
   "description": "Typescript types utility package.",
+=======
+  "name": "@infra-blocks/lib-template",
+  "version": "0.0.4",
+  "description": "This repository is a template to generate repositories meant to hold the source code of NPM packages written in TypeScript.",
+>>>>>>> template/master
   "keywords": [
     "type",
     "type guard"
