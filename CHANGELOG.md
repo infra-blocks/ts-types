@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.5] - 2024-05-19
+
+### Changed
+
+- Migrated to the [infra-blocks](https://github.com/infra-blocks) organization.
+
 ## [0.5.4] - 2024-04-21
 
 ### Added
@@ -80,13 +86,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `isNumber`
   - `isFunction`
 
-[0.5.4]: https://github.com/infrastructure-blocks/ts-types/compare/v0.5.3...v0.5.4
-[0.5.3]: https://github.com/infrastructure-blocks/ts-types/compare/v0.5.2...v0.5.3
-[0.5.2]: https://github.com/infrastructure-blocks/ts-types/compare/v0.5.1...v0.5.2
-[0.5.1]: https://github.com/infrastructure-blocks/ts-types/compare/v0.5.0...v0.5.1
-[0.5.0]: https://github.com/infrastructure-blocks/ts-types/compare/v0.4.0...v0.5.0
-[0.4.0]: https://github.com/infrastructure-blocks/ts-types/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/infrastructure-blocks/ts-types/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/infrastructure-blocks/ts-types/compare/v0.1.1...v0.2.0
-[0.1.1]: https://github.com/infrastructure-blocks/ts-types/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/infrastructure-blocks/ts-types/releases/tag/v0.1.0
+[0.5.5]: https://github.com/infra-blocks/ts-types/compare/v0.5.4...v0.5.5
+[0.5.4]: https://github.com/infra-blocks/ts-types/compare/v0.5.3...v0.5.4
+[0.5.3]: https://github.com/infra-blocks/ts-types/compare/v0.5.2...v0.5.3
+[0.5.2]: https://github.com/infra-blocks/ts-types/compare/v0.5.1...v0.5.2
+[0.5.1]: https://github.com/infra-blocks/ts-types/compare/v0.5.0...v0.5.1
+[0.5.0]: https://github.com/infra-blocks/ts-types/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/infra-blocks/ts-types/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/infra-blocks/ts-types/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/infra-blocks/ts-types/compare/v0.1.1...v0.2.0
+[0.1.1]: https://github.com/infra-blocks/ts-types/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/infra-blocks/ts-types/releases/tag/v0.1.0
