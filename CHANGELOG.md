@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2024-12-11
+
+### Added
+
+- Events utilities.
+  - `Events` base type to describe what valid events are: a listing of field names with their corresponding handler types.
+  - `EmitterLike` interface for classes and objects that offer event subscription through the `on` method.
+  - `EmitterLikeBase` base class for convenient reusable implementation of emitters that make use of NodeJs emitters internally.
+
 ## [0.5.6] - 2024-12-11
 
 ### Deprecated

@@ -1,5 +1,6 @@
 export * from "./func.js";
 export * from "./guard.js";
+export * from "./events.js";
 
 /**
  * Convenient type alias to regroup a type that can be T, null or undefined.
