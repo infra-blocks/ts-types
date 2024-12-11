@@ -1,5 +1,6 @@
 export * from "./func.js";
-export * from "./guard.js";
+export * from "./guards.js";
+export * from "./keys.js";
 
 /**
  * Convenient type alias to regroup a type that can be T, null or undefined.
@@ -36,13 +37,3 @@ export type UnpackedPromise<T> = T extends Promise<infer U> ? U : never;
 export type TransitivePartial<T> = {
   [K in keyof T]?: T[K] extends object ? TransitivePartial<T[K]> : T[K];
 };
-
-/**
- * A convenience type mapping to extract keys of a type that are of a given type.
- *
- * For example, if you would like all the types of an object that are numbers, you could do
- * KeyOfType<TheType, number>
- */
-export type KeyOfType<T, U> = {
-  [P in keyof T]: T[P] extends U ? P : never;
-}[keyof T];

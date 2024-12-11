@@ -1,7 +1,7 @@
 import { expect } from "@infra-blocks/test";
 import { isFunction, isNumber, isString, isSymbol } from "../../src/index.js";
 
-describe("guard", function () {
+describe("guards", function () {
   /* eslint-enable @typescript-eslint/no-unused-vars */
   describe("isString", function () {
     it("should return false for undefined", function () {

@@ -1,7 +1,7 @@
 import { expect } from "@infra-blocks/test";
 import {
   isString,
-  KeyOfType,
+  KeysOfType,
   TransitivePartial,
   UnpackedArray,
   UnpackedPromise,
@@ -39,25 +39,6 @@ describe("types", function () {
       func({});
       // Notice how we don't have to provide the second field of the nested object.
       func({ three: { threeOne: "toto" } });
-    });
-  });
-  describe("KeyOfType", function () {
-    interface TestType {
-      firstName: string;
-      lastName: string;
-      x: number;
-      y: number;
-      z: number;
-      getAge: () => number;
-      getStuff: () => string;
-    }
-
-    it("should compile with keys of type number", function () {
-      const func = (arg: KeyOfType<TestType, number>): string => arg;
-      // Those are the only values for which it compiles.
-      func("x");
-      func("y");
-      func("z");
     });
   });
 });
