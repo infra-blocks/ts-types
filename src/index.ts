@@ -23,6 +23,8 @@ export type UnpackedArray<T> = T extends (infer U)[] ? U : never;
  * It will cause compilation errors if T isn't a promise.
  *
  * See here: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html
+ *
+ * @deprecated Use built-in {@link Awaited} instead.
  */
 export type UnpackedPromise<T> = T extends Promise<infer U> ? U : never;
 
