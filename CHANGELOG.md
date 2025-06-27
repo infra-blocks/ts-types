@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2025-06-27
+
+### Added
+
+- `EnvironmentVariables` and `EnvVars` alias. This is one of the most commonly represented types
+in our code, so we are alasing it for convenience. It maps to `Record<string, string | undefined>`.
+
 ## [0.6.0] - 2024-12-11
 
 ### Added
@@ -102,6 +109,8 @@ that does the same, but probably better.
   - `isNumber`
   - `isFunction`
 
+[0.7.0]: https://github.com/infra-blocks/ts-types/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/infra-blocks/ts-types/compare/v0.5.5...v0.6.0
 [0.5.5]: https://github.com/infra-blocks/ts-types/compare/v0.5.4...v0.5.5
 [0.5.4]: https://github.com/infra-blocks/ts-types/compare/v0.5.3...v0.5.4
 [0.5.3]: https://github.com/infra-blocks/ts-types/compare/v0.5.2...v0.5.3
