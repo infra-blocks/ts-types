@@ -1,5 +1,6 @@
 import { expect } from "@infra-blocks/test";
 import {
+  EnvironmentVariables,
   isString,
   KeyOfType,
   TransitivePartial,
@@ -8,6 +9,13 @@ import {
 } from "../../src/index.js";
 
 describe("types", function () {
+  describe("EnvVars", function () {
+    // The tests here just showcase the good use cases when it compiles.
+    it("should work for process.env", function () {
+      const env: EnvironmentVariables = process.env;
+      expect(env).to.be.an("object");
+    });
+  });
   describe("UnpackedArray", function () {
     // The tests here just showcase the good use cases when it compiles.
     it("should work for an array of string", function () {

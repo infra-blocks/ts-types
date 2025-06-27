@@ -3,6 +3,15 @@ export * from "./guard.js";
 export * from "./events.js";
 
 /**
+ * Convenience type to represent environment variables.
+ */
+export type EnvironmentVariables = Record<string, string | undefined>;
+/**
+ * Just aliasing {@link EnvironmentVariables} for brevity.
+ */
+export type EnvVars = EnvironmentVariables;
+
+/**
  * Convenient type alias to regroup a type that can be T, null or undefined.
  *
  * Semantically the opposite of {@link NonNullable}.
