@@ -56,3 +56,28 @@ export type TransitivePartial<T> = {
 export type KeyOfType<T, U> = {
   [P in keyof T]: T[P] extends U ? P : never;
 }[keyof T];
+
+/**
+ * A function for forcing exhaustiveness in switch statements or if-else chains.
+ *
+ * @example
+ * type BigType = "penus" | "penii";
+ * function doStuff(x: BigType) {
+ *  switch (x) {
+ *    case "penus":
+ *      // Do some sheet.
+ *      break;
+ *    case "penii":
+ *      // Do some other sheet.
+ *      break;
+ *    default:
+ *      unreachable(x); // This will not compile if the switch is not exhaustive.
+ *  }
+ * }
+ * doStuff("penus");
+ *
+ * @param value - The value to validate against never.
+ */
+export function unreachable(value: never): never {
+  return value;
+}
