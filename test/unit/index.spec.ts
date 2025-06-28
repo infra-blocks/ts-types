@@ -6,6 +6,7 @@ import {
   TransitivePartial,
   UnpackedArray,
   UnpackedPromise,
+  unreachable,
 } from "../../src/index.js";
 
 describe("types", function () {
@@ -66,6 +67,24 @@ describe("types", function () {
       func("x");
       func("y");
       func("z");
+    });
+  });
+  describe(unreachable.name, function () {
+    it("should enforce exhaustiveness in switch statements", function () {
+      type BigType = "penus" | "penii";
+      function doStuff(x: BigType) {
+        switch (x) {
+          case "penus":
+            expect(true).to.be.true;
+            break;
+          case "penii":
+            expect(true).to.be.false;
+            break;
+          default:
+            unreachable(x); // This will not compile if the switch is not exhaustive.
+        }
+      }
+      doStuff("penus");
     });
   });
 });
