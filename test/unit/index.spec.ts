@@ -5,7 +5,6 @@ import {
   KeyOfType,
   TransitivePartial,
   UnpackedArray,
-  UnpackedPromise,
   unreachable,
 } from "../../src/index.js";
 
@@ -22,13 +21,6 @@ describe("types", function () {
     it("should work for an array of string", function () {
       const array = ["one", "two", "three"];
       const myStuff: UnpackedArray<typeof array> = "four";
-      expect(isString(myStuff)).to.be.true;
-    });
-  });
-  describe("UnpackedPromise", function () {
-    it("should work with a promise resolving in a string", function () {
-      const promise = Promise.resolve("one");
-      const myStuff: UnpackedPromise<typeof promise> = "two";
       expect(isString(myStuff)).to.be.true;
     });
   });
