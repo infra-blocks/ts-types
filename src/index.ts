@@ -19,6 +19,14 @@ export type EnvVars = EnvironmentVariables;
 export type Nullable<T> = T | null | undefined;
 
 /**
+ * Convenient mapped type to selectively make some fields of a type optional.
+ *
+ * This is in contrast to the built-in `Partial` type which makes all fields optional.
+ */
+export type Optional<T, K extends keyof T = keyof T> = Partial<Pick<T, K>> &
+  Omit<T, K>;
+
+/**
  * A convenience type extractor to get the inner type of an array.
  *
  * It will cause compilation errors if T isn't an array.
