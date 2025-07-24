@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.0] - 2025-07-24
+
+### Added
+
+- A type predicate (as opposed to a type guard) that tests whether a value is a plain JS
+object. It's only true in 2 cases:
+  - If the object was created with a literal.
+  - If the object was created with the `Object` constructor (`new Object()`).
+
+### Fixed
+
+- The return signature of `isObject`. Previously, the type guard stated `value is object`
+as its return type, but this is incorrect. `typeof null` returns `"object"`, but the
+typescript `object` type [does not include null values](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-2.html#object-type).
+Therefore, the real type that the type guard is checking against is `object | null`, and
+not strictly `object`.
+
 ## [0.11.0] - 2025-07-23
 
 ### Added
@@ -139,6 +156,10 @@ that does the same, but probably better.
   - `isNumber`
   - `isFunction`
 
+[0.12.0]: https://github.com/infra-blocks/ts-types/compare/v0.11.0...v0.12.0
+[0.11.0]: https://github.com/infra-blocks/ts-types/compare/v0.10.0...v0.11.0
+[0.10.0]: https://github.com/infra-blocks/ts-types/compare/v0.9.0...v0.10.0
+[0.9.0]: https://github.com/infra-blocks/ts-types/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/infra-blocks/ts-types/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/infra-blocks/ts-types/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/infra-blocks/ts-types/compare/v0.5.5...v0.6.0
