@@ -1,6 +1,7 @@
 export * from "./func.js";
 export * from "./guard.js";
 export * from "./events.js";
+export * from "./predicates.js";
 
 /**
  * Convenience type to represent environment variables.

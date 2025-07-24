@@ -86,7 +86,7 @@ export function isNull(value: unknown): value is null {
  *
  * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
-export function isObject(value: unknown): value is object {
+export function isObject(value: unknown): value is object | null {
   return typeof value === "object";
 }
 
