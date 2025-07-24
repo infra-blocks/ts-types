@@ -33,6 +33,18 @@ export type Optional<T, K extends keyof T = keyof T> = Partial<Pick<T, K>> &
   Omit<T, K>;
 
 /**
+ * A union type that includes all primitive types.
+ */
+export type Primitive =
+  | bigint
+  | boolean
+  | null
+  | number
+  | string
+  | symbol
+  | undefined;
+
+/**
  * A convenience type mapping that transitively make partial fields optional.
  *
  * The built-in Partial type doesn't cover nested objects, this one does.

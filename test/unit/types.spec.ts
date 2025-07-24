@@ -4,6 +4,7 @@ import {
   isString,
   KeyOfType,
   Optional,
+  Primitive,
   TransitivePartial,
   UnpackedArray,
 } from "../../src/index.js";
@@ -74,11 +75,39 @@ describe("types", function () {
       };
     });
   });
-  describe("UnpackedArray", function () {
-    it("should work for an array of string", function () {
-      const array = ["one", "two", "three"];
-      const myStuff: UnpackedArray<typeof array> = "four";
-      expect(isString(myStuff)).to.be.true;
+  describe("Primitive", function () {
+    function canYouEven(value: Primitive): boolean {
+      return value === value;
+    }
+
+    it("should not compile with an object", function () {
+      // @ts-expect-error object is not a Primitive.
+      canYouEven({});
+    });
+    it("should not compile with an array", function () {
+      // @ts-expect-error array is not a Primitive.
+      canYouEven([]);
+    });
+    it("should compile with bigint", function () {
+      canYouEven(42n);
+    });
+    it("should compile with boolean", function () {
+      canYouEven(true);
+    });
+    it("should compile with null", function () {
+      canYouEven(null);
+    });
+    it("should compile with number", function () {
+      canYouEven(42);
+    });
+    it("should compile with string", function () {
+      canYouEven("hello");
+    });
+    it("should compile with symbol", function () {
+      canYouEven(Symbol("test"));
+    });
+    it("should compile with undefined", function () {
+      canYouEven(undefined);
     });
   });
   describe("TransitivePartial", function () {
@@ -97,6 +126,13 @@ describe("types", function () {
       func({});
       // Notice how we don't have to provide the second field of the nested object.
       func({ three: { threeOne: "toto" } });
+    });
+  });
+  describe("UnpackedArray", function () {
+    it("should work for an array of string", function () {
+      const array = ["one", "two", "three"];
+      const myStuff: UnpackedArray<typeof array> = "four";
+      isString(myStuff);
     });
   });
 });
