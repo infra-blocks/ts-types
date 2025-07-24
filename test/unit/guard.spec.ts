@@ -7,6 +7,7 @@ import {
   isNumber,
   isObject,
   isObjectNotNull,
+  isPrimitive,
   isString,
   isSymbol,
   isUndefined,
@@ -133,6 +134,35 @@ describe("guard", function () {
     it("should return true for an instance of a class", function () {
       class MyClass {}
       expect(isObjectNotNull(new MyClass())).to.be.true;
+    });
+  });
+  describe(isPrimitive.name, function () {
+    it("should return false for an object", function () {
+      expect(isPrimitive({})).to.be.false;
+    });
+    it("should return false for an array", function () {
+      expect(isPrimitive([])).to.be.false;
+    });
+    it("should return true for a bigint", function () {
+      expect(isPrimitive(42n)).to.be.true;
+    });
+    it("should return true for a boolean", function () {
+      expect(isPrimitive(true)).to.be.true;
+    });
+    it("should return true for null", function () {
+      expect(isPrimitive(null)).to.be.true;
+    });
+    it("should return true for a number", function () {
+      expect(isPrimitive(42)).to.be.true;
+    });
+    it("should return true for a string", function () {
+      expect(isPrimitive("I am a string")).to.be.true;
+    });
+    it("should return true for a symbol", function () {
+      expect(isPrimitive(Symbol("toto"))).to.be.true;
+    });
+    it("should return true for undefined", function () {
+      expect(isPrimitive(undefined)).to.be.true;
     });
   });
   describe(isString.name, function () {

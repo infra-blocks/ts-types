@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.13.0] - 2025-07-24
+
+### Added
+
+- The `Primitive` utility type that regroups all 7 TS/JS primitives:
+  - bigint
+  - boolean
+  - null
+  - number
+  - string
+  - symbol
+  - undefined
+- The matching `isPrimitive` type guard that checks if a value is a primitive.
+
 ## [0.12.0] - 2025-07-24
 
 ### Added
@@ -156,6 +170,7 @@ that does the same, but probably better.
   - `isNumber`
   - `isFunction`
 
+[0.13.0]: https://github.com/infra-blocks/ts-types/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/infra-blocks/ts-types/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/infra-blocks/ts-types/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/infra-blocks/ts-types/compare/v0.9.0...v0.10.0
