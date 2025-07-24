@@ -1,3 +1,5 @@
+import { Primitive } from "./types.js";
+
 /**
  * A type guard to assess that a value is a bigint.
  *
@@ -105,6 +107,39 @@ export function isObject(value: unknown): value is object | null {
  */
 export function isObjectNotNull(value: unknown): value is object {
   return !isNull(value) && typeof value === "object";
+}
+
+/**
+ * A type guard to assess that a value is a primitive.
+ *
+ * This function checks if the value is one of the primitive types:
+ * bigint, boolean, null, number, string, symbol, or undefined.
+ *
+ * Sometimes those checks are made with the `typeof` operator, sometimes with strict equality checks.
+ *
+ * @param value - The value to test.
+ *
+ * @returns Whether or not the value is a primitive.
+ *
+ * @see isBigint
+ * @see isBoolean
+ * @see isNull
+ * @see isNumber
+ * @see isString
+ * @see isSymbol
+ * @see isUndefined
+ * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
+ */
+export function isPrimitive(value: unknown): value is Primitive {
+  return (
+    isBigint(value) ||
+    isBoolean(value) ||
+    isNull(value) ||
+    isNumber(value) ||
+    isString(value) ||
+    isSymbol(value) ||
+    isUndefined(value)
+  );
 }
 
 /**

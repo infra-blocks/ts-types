@@ -1,3 +1,5 @@
+import { isObjectNotNull } from "./guard.js";
+
 /**
  * A type predicate to determine if a value is a plain object.
  *
@@ -9,7 +11,5 @@
  * @returns Whether or not the value is a plain object.
  */
 export function isPlainObject(value: unknown): boolean {
-  return (
-    typeof value === "object" && value !== null && value.constructor === Object
-  );
+  return isObjectNotNull(value) && value.constructor === Object;
 }
