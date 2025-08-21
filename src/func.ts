@@ -27,6 +27,11 @@ export type Predicate<T> = (item: T) => boolean;
 export type Provider<T> = () => T;
 
 /**
+ * A type alias for asynchronous provider functions.
+ */
+export type AsyncProvider<T> = () => Promise<T>;
+
+/**
  * A convenient type declaration for handlers used to resolve "error" type events.
  */
 export type ErrorHandler<T extends Error = Error> = (err: T) => void;
