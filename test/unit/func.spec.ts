@@ -80,7 +80,7 @@ describe("func", function () {
       expect(func()).to.equal("toto");
     });
   });
-  describe("Provider", function () {
+  describe("AsyncProvider", function () {
     it("should compile for an async function without argument", async function () {
       const func: AsyncProvider<string> = () => Promise.resolve("toto");
       await expect(func()).to.eventually.equal("toto");
