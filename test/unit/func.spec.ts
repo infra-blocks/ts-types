@@ -1,5 +1,6 @@
 import { expect } from "@infra-blocks/test";
 import {
+  AsyncProvider,
   Callable,
   Constructor,
   ErrorHandler,
@@ -77,6 +78,12 @@ describe("func", function () {
     it("should compile for a function without argument", function () {
       const func: Provider<string> = () => "toto";
       expect(func()).to.equal("toto");
+    });
+  });
+  describe("Provider", function () {
+    it("should compile for an async function without argument", async function () {
+      const func: AsyncProvider<string> = () => Promise.resolve("toto");
+      await expect(func()).to.eventually.equal("toto");
     });
   });
   describe("ErrorHandler", function () {
