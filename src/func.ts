@@ -32,6 +32,16 @@ export type Provider<T> = () => T;
 export type AsyncProvider<T> = () => Promise<T>;
 
 /**
+ * A type alias for a function that creates objects of a given type.
+ */
+export type Factory<P extends unknown[], R> = (...params: P) => R;
+
+/**
+ * The async flavor of {@link Factory}.
+ */
+export type AsyncFactory<P extends unknown[], R> = (...params: P) => Promise<R>;
+
+/**
  * A convenient type declaration for handlers used to resolve "error" type events.
  */
 export type ErrorHandler<T extends Error = Error> = (err: T) => void;
