@@ -1,9 +1,11 @@
 import { expect } from "@infra-blocks/test";
 import {
+  AsyncFactory,
   AsyncProvider,
   Callable,
   Constructor,
   ErrorHandler,
+  Factory,
   Provider,
 } from "../../src/index.js";
 
@@ -84,6 +86,28 @@ describe("func", function () {
     it("should compile for an async function without argument", async function () {
       const func: AsyncProvider<string> = () => Promise.resolve("toto");
       await expect(func()).to.eventually.equal("toto");
+    });
+  });
+  describe("Factory", function () {
+    it("should compile for a function with parameters", function () {
+      const func: Factory<[number, string], object> = (left, right) => ({
+        twice: left * 2,
+        greet: `Hello, ${right}!`,
+      });
+      expect(func(2, "t1t")).to.deep.equal({ twice: 4, greet: "Hello, t1t!" });
+    });
+  });
+  describe("AsyncFactory", function () {
+    it("should compile for an async function with parameters", async function () {
+      const func: AsyncFactory<[number, string], object> = (left, right) =>
+        Promise.resolve({
+          thrice: left * 3,
+          greet: `Hello, ${right}!`,
+        });
+      await expect(func(2, "tw4t")).to.eventually.deep.equal({
+        thrice: 6,
+        greet: "Hello, tw4t!",
+      });
     });
   });
   describe("ErrorHandler", function () {
