@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.17.0] - 2025-11-30
+
+### Added
+
+- The `MapKeys` utility type that simply maps all keys of a type to a given value.
+- The `SameKeys` utility type that is an alias for `MapKeys<T, unknown>`. This one is meant to be
+used as a type constraint that forces a type to have the same keys as another, yet impose nothing
+on their values. Example:
+`class MyTransform<T extends SameKeys<MyType>` declares a class that is parameterized on any 
+type as long as they have the same keys as `MyType`. A method can then be made, with the example
+signature: `myTransform<K extends keyof MyType>(key: K): T[K]` that takes a key of `MyType` and
+transforms it to a value with a type specified by `T`.
+
 ## [0.16.0] - 2025-11-29
 
 ### Added

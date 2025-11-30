@@ -18,6 +18,13 @@ export type KeyOfType<T, U> = {
 }[keyof T];
 
 /**
+ * A mapped type remapping all keys of K to type V.
+ */
+export type MapKeys<K, V> = {
+  [k in keyof K]: V;
+};
+
+/**
  * Convenient type alias to regroup a type that can be T, null or undefined.
  *
  * Semantically the opposite of {@link NonNullable}.
@@ -43,6 +50,15 @@ export type Primitive =
   | string
   | symbol
   | undefined;
+
+/**
+ * A type utility useful to constrain types to have the same keys as M, without imposing
+ * restrictions on the value.
+ *
+ * It's an alias for MapKeys<M, unknown>.
+ */
+// TODO: write a good minimal test for this type.
+export type SameKeys<M> = MapKeys<M, unknown>;
 
 /**
  * A convenience type mapping that transitively make partial fields optional.
