@@ -3,6 +3,7 @@ import {
   EnvironmentVariables,
   isString,
   KeyOfType,
+  MapKeys,
   Optional,
   Primitive,
   TransitivePartial,
@@ -41,6 +42,25 @@ describe("types", function () {
       func("getAge");
       // @ts-expect-error getStuff is not a number.
       func("getStuff");
+    });
+  });
+  describe("MapKeys", function () {
+    interface TestType {
+      firstName: string;
+      lastName: string;
+      x: number;
+      y: number;
+      z: number;
+      getAge: () => number;
+      getStuff: () => string;
+    }
+
+    it("should remap all keys", function () {
+      type MappedType = MapKeys<TestType, Date>;
+      // Any key returns a date.
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const func = <K extends keyof MappedType>(m: MappedType, k: K): Date =>
+        m[k];
     });
   });
   describe("Optional", function () {
