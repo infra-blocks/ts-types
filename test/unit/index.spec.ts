@@ -3,9 +3,9 @@ import { unreachable } from "../../src/index.js";
 
 // Most of the The tests here just showcase the good use cases when it compiles.
 // So the test don't actually do much besides showing compilation.
-describe("types", function () {
-  describe(unreachable.name, function () {
-    it("should enforce exhaustiveness in switch statements", function () {
+describe("types", () => {
+  describe(unreachable.name, () => {
+    it("should enforce exhaustiveness in switch statements", () => {
       type BigType = "penus" | "penii";
       function doStuff(x: BigType) {
         switch (x) {

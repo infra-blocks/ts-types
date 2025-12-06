@@ -22,7 +22,8 @@ export type Callable = (...args: never[]) => unknown;
  We use "any" here because this is actually a requirement on mixins at the time of this writing. Meaning,
  mixins *must* have a constructor with a single rest argument of any[]. So we thought that'd be a good default.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+// biome-ignore lint/suspicious/noExplicitAny: any is the only correct type here.
 export type Constructor<R = object, A extends any[] = any[]> = new (
   ...args: A
 ) => R;
