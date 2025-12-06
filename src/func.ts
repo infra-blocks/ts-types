@@ -1,9 +1,20 @@
 /**
+ * The async flavor of {@link Factory}.
+ */
+export type AsyncFactory<P extends unknown[], R> = (...params: P) => Promise<R>;
+
+/**
+ * A type alias for asynchronous provider functions.
+ */
+export type AsyncProvider<T> = () => Promise<T>;
+
+/**
  * Convenient type to easily represent "callable" types and to avoid using
  * "any" in client code.
  */
 export type Callable = (...args: never[]) => unknown;
 
+// TODO: abstract constructor? For constructors that aren't called, as used in InstanceType<>.
 /**
  * Convenient type alias for constructors.
  */
@@ -17,6 +28,16 @@ export type Constructor<R = object, A extends any[] = any[]> = new (
 ) => R;
 
 /**
+ * A convenient type declaration for handlers used to resolve "error" type events.
+ */
+export type ErrorHandler<T extends Error = Error> = (err: T) => void;
+
+/**
+ * A type alias for a function that creates objects of a given type.
+ */
+export type Factory<P extends unknown[], R> = (...params: P) => R;
+
+/**
  * A type alias for single element predicate functions.
  */
 export type Predicate<T> = (item: T) => boolean;
@@ -27,21 +48,6 @@ export type Predicate<T> = (item: T) => boolean;
 export type Provider<T> = () => T;
 
 /**
- * A type alias for asynchronous provider functions.
+ * A type alias for type guards.
  */
-export type AsyncProvider<T> = () => Promise<T>;
-
-/**
- * A type alias for a function that creates objects of a given type.
- */
-export type Factory<P extends unknown[], R> = (...params: P) => R;
-
-/**
- * The async flavor of {@link Factory}.
- */
-export type AsyncFactory<P extends unknown[], R> = (...params: P) => Promise<R>;
-
-/**
- * A convenient type declaration for handlers used to resolve "error" type events.
- */
-export type ErrorHandler<T extends Error = Error> = (err: T) => void;
+export type TypeGuard<T extends V, V = unknown> = (value: V) => value is T;
