@@ -7,8 +7,11 @@ import {
   ErrorHandler,
   Factory,
   Provider,
+  TypeGuard,
 } from "../../src/index.js";
+import { assert, IsExact } from "conditional-type-checks";
 
+// TODO: use conditional type checks where applicable to reduce number of eslint escapes.
 describe("func", function () {
   // A lot of the tests here just check for compilation, so we have a bunch of unused variables.
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -112,10 +115,8 @@ describe("func", function () {
   });
   describe("ErrorHandler", function () {
     it("should compile with classic errors as default", function () {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      let error: Error;
       const myHandler: ErrorHandler = (err) => {
-        error = err;
+        assert<IsExact<Error, typeof err>>(true);
       };
       myHandler(new Error("kaboomy"));
     });
@@ -128,12 +129,39 @@ describe("func", function () {
         }
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      let error: MyError;
       const myHandler: ErrorHandler<MyError> = (err) => {
-        error = err;
+        assert<IsExact<MyError, typeof err>>(true);
       };
       myHandler(new MyError());
+    });
+  });
+  describe("TypeGuard", function () {
+    it("should infer uknown as the default parameter type", function () {
+      function isString(value: unknown): value is string {
+        return typeof value === "string";
+      }
+      const guard: TypeGuard<string> = isString;
+      const value: unknown = 42;
+      if (guard(value)) {
+        assert<IsExact<string, typeof value>>(true);
+      } else {
+        assert<IsExact<unknown, typeof value>>(true);
+      }
+    });
+    it("should work with a custom parameter type", function () {
+      interface Identifiable {
+        id: number;
+      }
+      function isIdentifiable(value: object): value is Identifiable {
+        return "id" in value && typeof value.id === "number";
+      }
+      const guard: TypeGuard<Identifiable, object> = isIdentifiable;
+      const value: object = { id: 42 };
+      if (guard(value)) {
+        assert<IsExact<Identifiable, typeof value>>(true);
+      } else {
+        assert<IsExact<object, typeof value>>(true);
+      }
     });
   });
 });
