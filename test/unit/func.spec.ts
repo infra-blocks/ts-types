@@ -1,6 +1,7 @@
 import { expect } from "@infra-blocks/test";
 import { assert, type IsExact } from "conditional-type-checks";
 import type {
+  AbstractConstructor,
   AsyncFactory,
   AsyncProvider,
   Callable,
@@ -13,6 +14,40 @@ import type {
 
 // TODO: use conditional type checks where applicable to reduce number of eslint escapes.
 describe("func", () => {
+  describe("AbstractConstructor", () => {
+    it("should compile with an abstract constructor", () => {
+      abstract class TestClass {}
+      const _ctor: AbstractConstructor = TestClass;
+    });
+    it("should be instantiated with basic type constructors", () => {
+      const _numberCtor: AbstractConstructor = Number;
+      const _stringCtor: AbstractConstructor = String;
+      const _booleanCtor: AbstractConstructor = Boolean;
+      const _arrayCtor: AbstractConstructor = Array;
+      const _objectCtor: AbstractConstructor = Object;
+      const _functionCtor: AbstractConstructor = Function;
+    });
+    it("should work with a class that requires parameters", () => {
+      class MyClass {
+        // biome-ignore lint/complexity/noUselessConstructor: part of the test case.
+        constructor(_l: number, _r: string) {}
+      }
+      // Works without type hints.
+      let _ctor: AbstractConstructor = MyClass;
+      // Or with.
+      _ctor = MyClass as AbstractConstructor<MyClass>;
+      _ctor = MyClass as AbstractConstructor<MyClass, [number, string]>;
+    });
+    it("should work with mixins", () => {
+      function _bigMixin(Base: AbstractConstructor) {
+        return class MixedUp extends Base {
+          getName() {
+            return "eeee wut?";
+          }
+        };
+      }
+    });
+  });
   // A lot of the tests here just check for compilation, so we have a bunch of unused variables.
   describe("Callable", () => {
     it("should work for a function without arguments and with no returns", () => {
@@ -41,6 +76,11 @@ describe("func", () => {
     });
   });
   describe("Constructor", () => {
+    it("should not compile with an abstract constructor", () => {
+      abstract class TestClass {}
+      // @ts-expect-error Constructor cannot be abstract
+      const _ctor: Constructor = TestClass;
+    });
     it("basic type constructors should be assignable", () => {
       const _numberConstructor: Constructor = Number;
       const _stringConstructor: Constructor = String;
@@ -62,7 +102,7 @@ describe("func", () => {
         }
       }
       // Works without type hints.
-      let _ctor = MyClass;
+      let _ctor: Constructor = MyClass;
       // Or with.
       _ctor = MyClass as Constructor<MyClass>;
       _ctor = MyClass as Constructor<MyClass, [number, string]>;

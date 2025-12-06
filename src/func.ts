@@ -1,4 +1,15 @@
 /**
+ * The abstract version of {@link Constructor}.
+ *
+ * Useful when the constructor is never called directly (such as when used with an `instanceof` operator).
+ */
+export type AbstractConstructor<
+  R = object,
+  // biome-ignore lint/suspicious/noExplicitAny: any is the only correct type here.
+  A extends any[] = any[],
+> = abstract new (...args: A) => R;
+
+/**
  * The async flavor of {@link Factory}.
  */
 export type AsyncFactory<P extends unknown[], R> = (...params: P) => Promise<R>;
@@ -14,7 +25,6 @@ export type AsyncProvider<T> = () => Promise<T>;
  */
 export type Callable = (...args: never[]) => unknown;
 
-// TODO: abstract constructor? For constructors that aren't called, as used in InstanceType<>.
 /**
  * Convenient type alias for constructors.
  */
@@ -22,7 +32,6 @@ export type Callable = (...args: never[]) => unknown;
  We use "any" here because this is actually a requirement on mixins at the time of this writing. Meaning,
  mixins *must* have a constructor with a single rest argument of any[]. So we thought that'd be a good default.
  */
-
 // biome-ignore lint/suspicious/noExplicitAny: any is the only correct type here.
 export type Constructor<R = object, A extends any[] = any[]> = new (
   ...args: A
