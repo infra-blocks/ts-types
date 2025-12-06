@@ -1,5 +1,6 @@
 import { expect } from "@infra-blocks/test";
-import {
+import { assert, type IsExact } from "conditional-type-checks";
+import type {
   AsyncFactory,
   AsyncProvider,
   Callable,
@@ -9,68 +10,65 @@ import {
   Provider,
   TypeGuard,
 } from "../../src/index.js";
-import { assert, IsExact } from "conditional-type-checks";
 
 // TODO: use conditional type checks where applicable to reduce number of eslint escapes.
-describe("func", function () {
+describe("func", () => {
   // A lot of the tests here just check for compilation, so we have a bunch of unused variables.
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  describe("Callable", function () {
-    it("should work for a function without arguments and with no returns", function () {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const func: Callable = () => {
+  describe("Callable", () => {
+    it("should work for a function without arguments and with no returns", () => {
+      const _func: Callable = () => {
         return;
       };
     });
-    it("should work for a function that throws", function () {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const func: Callable = (): never => {
+    it("should work for a function that throws", () => {
+      const _func: Callable = (): never => {
         throw new Error("woopsy");
       };
     });
-    it("should work for a regular function", function () {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const func: Callable = (
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        arg1: string,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        arg2: number
+    it("should work for a regular function", () => {
+      const _func: Callable = (
+        _arg1: string,
+        _arg2: number,
       ): { hello: string } => {
         return {
           hello: "pal",
         };
       };
     });
-    it("should work for a callable type", function () {
-      type Test = {
-        (...args: string[]): void;
-      };
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
-      const test: Callable = ((hello: string) => {}) as Test;
+    it("should work for a callable type", () => {
+      type Test = (...args: string[]) => void;
+      const _test: Callable = ((_: string) => {}) as Test;
     });
   });
-  describe("Constructor", function () {
-    it("basic type constructors should be assignable", function () {
-      const numberConstructor: Constructor = Number;
-      const stringConstructor: Constructor = String;
-      const booleanConstructor: Constructor = Boolean;
-      const arrayConstructor: Constructor = Array;
-      const objectConstructor: Constructor = Object;
-      const functionConstructor: Constructor = Function;
+  describe("Constructor", () => {
+    it("basic type constructors should be assignable", () => {
+      const _numberConstructor: Constructor = Number;
+      const _stringConstructor: Constructor = String;
+      const _booleanConstructor: Constructor = Boolean;
+      const _arrayConstructor: Constructor = Array;
+      const _objectConstructor: Constructor = Object;
+      const _functionConstructor: Constructor = Function;
     });
-    it("should work with a class", function () {
+    it("should work with a class", () => {
       class MyClass {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        constructor(left: number, right: string) {}
+        // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Just testing.
+        private readonly _left: number;
+        // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Just testing.
+        private readonly _right: string;
+
+        constructor(left: number, right: string) {
+          this._left = left;
+          this._right = right;
+        }
       }
       // Works without type hints.
-      let constructor = MyClass;
+      let _ctor = MyClass;
       // Or with.
-      constructor = MyClass as Constructor<MyClass>;
-      constructor = MyClass as Constructor<MyClass, [number, string]>;
+      _ctor = MyClass as Constructor<MyClass>;
+      _ctor = MyClass as Constructor<MyClass, [number, string]>;
     });
-    it("should work with mixins", function () {
-      function bigMixin(Base: Constructor) {
+    it("should work with mixins", () => {
+      function _bigMixin(Base: Constructor) {
         return class MixedUp extends Base {
           getName() {
             return "eeee wut?";
@@ -79,20 +77,20 @@ describe("func", function () {
       }
     });
   });
-  describe("Provider", function () {
-    it("should compile for a function without argument", function () {
+  describe("Provider", () => {
+    it("should compile for a function without argument", () => {
       const func: Provider<string> = () => "toto";
       expect(func()).to.equal("toto");
     });
   });
-  describe("AsyncProvider", function () {
-    it("should compile for an async function without argument", async function () {
+  describe("AsyncProvider", () => {
+    it("should compile for an async function without argument", async () => {
       const func: AsyncProvider<string> = () => Promise.resolve("toto");
       await expect(func()).to.eventually.equal("toto");
     });
   });
-  describe("Factory", function () {
-    it("should compile for a function with parameters", function () {
+  describe("Factory", () => {
+    it("should compile for a function with parameters", () => {
       const func: Factory<[number, string], object> = (left, right) => ({
         twice: left * 2,
         greet: `Hello, ${right}!`,
@@ -100,8 +98,8 @@ describe("func", function () {
       expect(func(2, "t1t")).to.deep.equal({ twice: 4, greet: "Hello, t1t!" });
     });
   });
-  describe("AsyncFactory", function () {
-    it("should compile for an async function with parameters", async function () {
+  describe("AsyncFactory", () => {
+    it("should compile for an async function with parameters", async () => {
       const func: AsyncFactory<[number, string], object> = (left, right) =>
         Promise.resolve({
           thrice: left * 3,
@@ -113,15 +111,16 @@ describe("func", function () {
       });
     });
   });
-  describe("ErrorHandler", function () {
-    it("should compile with classic errors as default", function () {
-      const myHandler: ErrorHandler = (err) => {
-        assert<IsExact<Error, typeof err>>(true);
+  describe("ErrorHandler", () => {
+    it("should compile with classic errors as default", () => {
+      const myHandler: ErrorHandler = (_) => {
+        assert<IsExact<Error, typeof _>>(true);
       };
       myHandler(new Error("kaboomy"));
     });
-    it("should compile with custom error", function () {
+    it("should compile with custom error", () => {
       class MyError extends Error {
+        // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Just testing
         private readonly otherField: string;
         constructor() {
           super("My Kaboomy");
@@ -129,14 +128,14 @@ describe("func", function () {
         }
       }
 
-      const myHandler: ErrorHandler<MyError> = (err) => {
-        assert<IsExact<MyError, typeof err>>(true);
+      const myHandler: ErrorHandler<MyError> = (_) => {
+        assert<IsExact<MyError, typeof _>>(true);
       };
       myHandler(new MyError());
     });
   });
-  describe("TypeGuard", function () {
-    it("should infer uknown as the default parameter type", function () {
+  describe("TypeGuard", () => {
+    it("should infer uknown as the default parameter type", () => {
       function isString(value: unknown): value is string {
         return typeof value === "string";
       }
@@ -148,7 +147,7 @@ describe("func", function () {
         assert<IsExact<unknown, typeof value>>(true);
       }
     });
-    it("should work with a custom parameter type", function () {
+    it("should work with a custom parameter type", () => {
       interface Identifiable {
         id: number;
       }

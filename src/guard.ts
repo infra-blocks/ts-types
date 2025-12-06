@@ -1,4 +1,4 @@
-import { Primitive } from "./types.js";
+import type { Primitive } from "./types.js";
 
 /**
  * A type guard to assess that a value is a bigint.
@@ -41,7 +41,7 @@ export function isBoolean(value: unknown): value is boolean {
  *
  * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
+// biome-ignore lint/complexity/noBannedTypes: Function is the correct type here.
 export function isFunction(value: unknown): value is Function {
   return typeof value === "function";
 }
