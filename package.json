@@ -1,6 +1,6 @@
 {
   "name": "@infra-blocks/types",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "description": "Typescript types utility package.",
   "keywords": [
     "type",
