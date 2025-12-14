@@ -7,6 +7,7 @@ import {
   type MapKeys,
   type Optional,
   type Primitive,
+  type TemplateExpression,
   type TransitivePartial,
   type UnpackedArray,
 } from "../../src/index.js";
@@ -158,6 +159,42 @@ describe("types", () => {
     });
     it("should compile with undefined", () => {
       canYouEven(undefined);
+    });
+  });
+  describe("TemplateExpression", () => {
+    function testTemplateLiteral(value: TemplateExpression): string {
+      return `${value}`;
+    }
+    it("should work with string", () => {
+      // Checking both compilation and runtime behavior.
+      expect(testTemplateLiteral("hello")).to.equal("hello");
+    });
+    it("should work with number", () => {
+      expect(testTemplateLiteral(42)).to.equal("42");
+    });
+    it("should work with bigint", () => {
+      expect(testTemplateLiteral(42n)).to.equal("42");
+    });
+    it("should work with boolean", () => {
+      expect(testTemplateLiteral(true)).to.equal("true");
+    });
+    it("should work with null", () => {
+      expect(testTemplateLiteral(null)).to.equal("null");
+    });
+    it("should work with undefined", () => {
+      expect(testTemplateLiteral(undefined)).to.equal("undefined");
+    });
+    it("should work with object", () => {
+      expect(testTemplateLiteral({ key: "value" })).to.equal("[object Object]");
+    });
+    it("should work with array", () => {
+      expect(testTemplateLiteral(["one", "two", "three"])).to.equal(
+        "one,two,three",
+      );
+    });
+    it("should not compile with symbol", () => {
+      // @ts-expect-error symbol is not allowed in TemplateExpression.
+      expect(() => testTemplateLiteral(Symbol("test"))).to.throw();
     });
   });
   describe("TransitivePartial", () => {

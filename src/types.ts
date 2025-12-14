@@ -88,6 +88,18 @@ export type Primitive =
 export type SameKeys<M> = MapKeys<M, unknown>;
 
 /**
+ * A type representing all types that can be used in a vanilla template literal.
+ *
+ * It includes all primitive types except symbols, which throw a {@link TypeError} when
+ * used directly in a template literal. It also includes objects, which will use
+ * various possible implementations. The default one is rather useless, however,
+ * as it only produces the string "[object Object]".
+ *
+ * See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#string_coercion
+ */
+export type TemplateExpression = Exclude<Primitive, symbol> | object;
+
+/**
  * A convenience type mapping that transitively make partial fields optional.
  *
  * The built-in Partial type doesn't cover nested objects, this one does.
