@@ -1,4 +1,31 @@
 /**
+ * The unique symbol used for branding types.
+ */
+export const brand: unique symbol = Symbol("__brand");
+
+/**
+ * Declares the branding of a type.
+ *
+ * Branding a type circumvent TypeScript's structural typing by adding an unique property to a type,
+ * making it incompatible with other types even if they share the same structure.
+ *
+ * Use it as such:
+ * ```typescript
+ * type UserId = string & Brand<"UserId">;
+ *
+ * // The proper way to obtain a UserId.
+ * function parseUserId(id: string): UserId {
+ *  ...
+ * }
+ * ```
+ */
+export type Brand<
+  T extends string | number | symbol = string | number | symbol,
+> = {
+  [brand]: { [k in T]: true };
+};
+
+/**
  * Convenience type to represent environment variables.
  */
 export type EnvironmentVariables = Record<string, string | undefined>;
