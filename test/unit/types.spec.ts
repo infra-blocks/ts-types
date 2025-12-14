@@ -1,5 +1,6 @@
 import { expect } from "@infra-blocks/test";
 import {
+  type Brand,
   type EnvironmentVariables,
   isString,
   type KeyOfType,
@@ -11,6 +12,40 @@ import {
 } from "../../src/index.js";
 
 describe("types", () => {
+  describe("Brand", () => {
+    it("should work as expected with a string brand", () => {
+      type UserId = string & Brand<"UserId">;
+      type OrderId = string & Brand<"OrderId">;
+
+      const plain = "hello";
+      // @ts-expect-error cannot assign the unbranded version to the branded one.
+      let _branded: UserId = plain;
+      // @ts-expect-error cannot assign a plain string to a branded type.
+      _branded = plain as OrderId;
+    });
+    it("should work as expected with a number brand", () => {
+      type UserId = string & Brand<5>;
+      type OrderId = string & Brand<10>;
+
+      const plain = "hello";
+      // @ts-expect-error cannot assign the unbranded version to the branded one.
+      let _branded: UserId = plain;
+      // @ts-expect-error cannot assign a plain string to a branded type.
+      _branded = plain as OrderId;
+    });
+    it("should work as expected with a symbol brand", () => {
+      const userIdSymbol = Symbol("UserId");
+      const orderIdSymbol = Symbol("OrderId");
+      type UserId = string & Brand<typeof userIdSymbol>;
+      type OrderId = string & Brand<typeof orderIdSymbol>;
+
+      const plain = "hello";
+      // @ts-expect-error cannot assign the unbranded version to the branded one.
+      let _branded: UserId = plain;
+      // @ts-expect-error cannot assign a plain string to a branded type.
+      _branded = plain as OrderId;
+    });
+  });
   describe("EnvVars", () => {
     it("should work for process.env", () => {
       const env: EnvironmentVariables = process.env;
