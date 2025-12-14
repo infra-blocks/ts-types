@@ -1,14 +1,19 @@
 import { expect } from "@infra-blocks/test";
 import { assert, type IsExact } from "conditional-type-checks";
+import { expectTypeOf } from "expect-type";
 import type {
   AbstractConstructor,
   AsyncFactory,
+  AsyncParser,
   AsyncProvider,
+  AsyncTransform,
   Callable,
   Constructor,
   ErrorHandler,
   Factory,
+  Parser,
   Provider,
+  Transform,
   TypeGuard,
 } from "../../src/index.js";
 
@@ -117,16 +122,42 @@ describe("func", () => {
       }
     });
   });
+  describe("Parser", () => {
+    it("should assume unknown as the default input type", () => {
+      expectTypeOf<Parser<string>>((stuff) => {
+        expectTypeOf(stuff).toEqualTypeOf<unknown>();
+        return "all good here";
+      });
+    });
+    it("should compile for a function with specified input type", () => {
+      expectTypeOf((_: string): number => {
+        throw new Error("nope");
+      }).toEqualTypeOf<Parser<number, string>>();
+    });
+  });
+  describe("AsyncParser", () => {
+    it("should assume unknown as the default input type", () => {
+      expectTypeOf<AsyncParser<string>>((stuff) => {
+        expectTypeOf(stuff).toEqualTypeOf<unknown>();
+        return Promise.resolve("all good here");
+      });
+    });
+    it("should compile for a function with specified input type", () => {
+      expectTypeOf((_: string): Promise<number> => {
+        throw new Error("nope");
+      }).toEqualTypeOf<AsyncParser<number, string>>();
+    });
+  });
   describe("Provider", () => {
     it("should compile for a function without argument", () => {
-      const func: Provider<string> = () => "toto";
-      expect(func()).to.equal("toto");
+      expectTypeOf<() => string>().toEqualTypeOf<Provider<string>>();
     });
   });
   describe("AsyncProvider", () => {
     it("should compile for an async function without argument", async () => {
-      const func: AsyncProvider<string> = () => Promise.resolve("toto");
-      await expect(func()).to.eventually.equal("toto");
+      expectTypeOf<() => Promise<string>>().toEqualTypeOf<
+        AsyncProvider<string>
+      >();
     });
   });
   describe("Factory", () => {
@@ -172,6 +203,20 @@ describe("func", () => {
         assert<IsExact<MyError, typeof _>>(true);
       };
       myHandler(new MyError());
+    });
+  });
+  describe("Transform", () => {
+    it("should compile with a valid function", () => {
+      expectTypeOf((_: string): number => {
+        throw new Error("nope");
+      }).toEqualTypeOf<Transform<string, number>>();
+    });
+  });
+  describe("AsyncTransform", () => {
+    it("should compile with a valid async function", () => {
+      expectTypeOf((_: string): Promise<number> => {
+        throw new Error("nope");
+      }).toEqualTypeOf<AsyncTransform<string, number>>();
     });
   });
   describe("TypeGuard", () => {
