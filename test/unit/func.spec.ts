@@ -1,5 +1,4 @@
 import { expect } from "@infra-blocks/test";
-import { assert, type IsExact } from "conditional-type-checks";
 import { expectTypeOf } from "expect-type";
 import type {
   AbstractConstructor,
@@ -183,9 +182,9 @@ describe("func", () => {
     });
   });
   describe("ErrorHandler", () => {
-    it("should compile with classic errors as default", () => {
-      const myHandler: ErrorHandler = (_) => {
-        assert<IsExact<Error, typeof _>>(true);
+    it("should compile with unknown as default", () => {
+      const myHandler: ErrorHandler = (err) => {
+        expectTypeOf(err).toEqualTypeOf<unknown>();
       };
       myHandler(new Error("kaboomy"));
     });
@@ -199,8 +198,8 @@ describe("func", () => {
         }
       }
 
-      const myHandler: ErrorHandler<MyError> = (_) => {
-        assert<IsExact<MyError, typeof _>>(true);
+      const myHandler: ErrorHandler<MyError> = (err) => {
+        expectTypeOf(err).toEqualTypeOf<MyError>();
       };
       myHandler(new MyError());
     });
@@ -227,9 +226,9 @@ describe("func", () => {
       const guard: TypeGuard<string> = isString;
       const value: unknown = 42;
       if (guard(value)) {
-        assert<IsExact<string, typeof value>>(true);
+        expectTypeOf(value).toEqualTypeOf<string>();
       } else {
-        assert<IsExact<unknown, typeof value>>(true);
+        expectTypeOf(value).toEqualTypeOf<unknown>();
       }
     });
     it("should work with a custom parameter type", () => {
@@ -242,9 +241,9 @@ describe("func", () => {
       const guard: TypeGuard<Identifiable, object> = isIdentifiable;
       const value: object = { id: 42 };
       if (guard(value)) {
-        assert<IsExact<Identifiable, typeof value>>(true);
+        expectTypeOf(value).toEqualTypeOf<Identifiable>();
       } else {
-        assert<IsExact<object, typeof value>>(true);
+        expectTypeOf(value).toEqualTypeOf<object>();
       }
     });
   });

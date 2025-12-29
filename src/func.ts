@@ -57,7 +57,7 @@ export type Constructor<R = object, A extends any[] = any[]> = new (
 /**
  * A convenient type declaration for handlers used to resolve "error" type events.
  */
-export type ErrorHandler<T extends Error = Error> = (err: T) => void;
+export type ErrorHandler<T = unknown> = (err: T) => void;
 
 /**
  * A type alias for a function that creates objects of a given type.
