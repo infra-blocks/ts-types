@@ -116,3 +116,17 @@ export type TransitivePartial<T> = {
  * See here: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html
  */
 export type UnpackedArray<T> = T extends (infer U)[] ? U : never;
+
+/**
+ * Returns a type where fields have selectively been made partial.
+ */
+export type WithPartial<T, K extends keyof T> = Omit<T, K> & {
+  [P in K]?: T[P];
+};
+
+/**
+ * Returns a type where fields have selectively been made required.
+ */
+export type WithRequired<T, K extends keyof T> = Omit<T, K> & {
+  [P in K]-?: T[P];
+};
