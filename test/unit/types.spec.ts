@@ -1,4 +1,4 @@
-import { expect } from "@infra-blocks/test";
+import { expect, expectTypeOf } from "@infra-blocks/test";
 import {
   type Brand,
   type EnvironmentVariables,
@@ -10,6 +10,8 @@ import {
   type TemplateExpression,
   type TransitivePartial,
   type UnpackedArray,
+  type WithPartial,
+  type WithRequired,
 } from "../../src/index.js";
 
 describe("types", () => {
@@ -219,6 +221,58 @@ describe("types", () => {
       const array = ["one", "two", "three"];
       const myStuff: UnpackedArray<typeof array> = "four";
       isString(myStuff);
+    });
+  });
+  describe("WithPartial", () => {
+    type TestType = {
+      yes: string;
+      no: string;
+      maybe?: string;
+      dunno?: unknown;
+    };
+    it("should have no impact if the field is already partial", () => {
+      expectTypeOf<
+        WithPartial<TestType, "maybe">
+      >().branded.toEqualTypeOf<TestType>();
+    });
+    it("should correctly make a field partial", () => {
+      expectTypeOf<WithPartial<TestType, "yes">>().branded.toEqualTypeOf<{
+        yes?: string;
+        no: string;
+        maybe?: string;
+        dunno?: unknown;
+      }>();
+    });
+    it("should work with several fields", () => {
+      expectTypeOf<WithPartial<TestType, "yes" | "no">>().branded.toEqualTypeOf<
+        Partial<TestType>
+      >();
+    });
+  });
+  describe("WithRequired", () => {
+    type TestType = {
+      yes: string;
+      no: string;
+      maybe?: string;
+      dunno?: unknown;
+    };
+    it("should have no impact if the field is already required", () => {
+      expectTypeOf<
+        WithRequired<TestType, "yes">
+      >().branded.toEqualTypeOf<TestType>();
+    });
+    it("should correctly make a field required", () => {
+      expectTypeOf<WithRequired<TestType, "maybe">>().branded.toEqualTypeOf<{
+        yes: string;
+        no: string;
+        maybe: string;
+        dunno?: unknown;
+      }>();
+    });
+    it("should work with several fields", () => {
+      expectTypeOf<
+        WithRequired<TestType, "maybe" | "dunno">
+      >().branded.toEqualTypeOf<Required<TestType>>();
     });
   });
 });
