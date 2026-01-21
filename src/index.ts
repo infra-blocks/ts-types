@@ -27,3 +27,27 @@ export * from "./types.js";
 export function unreachable(value: never): never {
   return value;
 }
+
+/**
+ * A function to mark a value as trusted for a type cast that can leverage inference.
+ *
+ * It is 100% the same as doing a type cast. Sometimes it's going to look nicer and
+ * look more compact, sometimes you're better off with writing the cast.
+ *
+ * @example
+ * type BullshitType = {
+ *  contentz?: string;
+ * };
+ * const value: BullshitType = {
+ *  contentz: "toto",
+ * };
+ * const content: string = trusted(value.contentz);
+ * content.toUpperCase();
+ *
+ * @param value - The value to type cast.
+ *
+ * @returns The value, casted as the parametric type.
+ */
+export function trusted<T>(value: unknown): T {
+  return value as T;
+}

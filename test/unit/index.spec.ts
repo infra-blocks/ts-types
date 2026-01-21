@@ -1,9 +1,21 @@
 import { expect } from "@infra-blocks/test";
-import { unreachable } from "../../src/index.js";
+import { trusted, unreachable } from "../../src/index.js";
 
 // Most of the The tests here just showcase the good use cases when it compiles.
 // So the test don't actually do much besides showing compilation.
 describe("types", () => {
+  describe(trusted.name, () => {
+    it("should work with the example", () => {
+      type BullshitType = {
+        contentz?: string;
+      };
+      const value: BullshitType = {
+        contentz: "toto",
+      };
+      const content: string = trusted(value.contentz);
+      content.toUpperCase();
+    });
+  });
   describe(unreachable.name, () => {
     it("should enforce exhaustiveness in switch statements", () => {
       type BigType = "penus" | "penii";
