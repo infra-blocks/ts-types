@@ -1,10 +1,15 @@
+import { fail } from "node:assert";
+
 export * from "./func.js";
 export * from "./guard.js";
 export * from "./predicates.js";
 export * from "./types.js";
 
+// TODO: Message type, that is either: undefined, a string, a string followed by format args or a function returning a string.
 /**
  * A function for forcing exhaustiveness in switch statements or if-else chains.
+ *
+ * Throws an assertion error at runtime if called. The message can be specified as the second argument.
  *
  * @example
  * type BigType = "penus" | "penii";
@@ -24,8 +29,8 @@ export * from "./types.js";
  *
  * @param value - The value to validate against never.
  */
-export function unreachable(value: never): never {
-  return value;
+export function unreachable(_: never, message?: string): never {
+  fail(message ?? "unreachable code reached!");
 }
 
 /**

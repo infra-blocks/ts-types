@@ -6,6 +6,7 @@ import {
   type KeyOfType,
   type MapKeys,
   type Optional,
+  type Phantom,
   type Primitive,
   type TemplateExpression,
   type TransitivePartial,
@@ -125,6 +126,14 @@ describe("types", () => {
         one: 1,
         two: "two",
         three: true,
+      };
+    });
+  });
+  describe("Phantom", () => {
+    it("should compile and allow to track a type parameter", () => {
+      type MyType<T> = { greet(): string } & Phantom<T>;
+      const _: MyType<number> = {
+        greet: () => "hello",
       };
     });
   });

@@ -17,6 +17,10 @@ describe("types", () => {
     });
   });
   describe(unreachable.name, () => {
+    it("should throw when called", () => {
+      // @ts-expect-error "coucou" cannot be assigned to never.
+      expect(() => unreachable("coucou")).to.throw();
+    });
     it("should enforce exhaustiveness in switch statements", () => {
       type BigType = "penus" | "penii";
       function doStuff(x: BigType) {
