@@ -1,11 +1,19 @@
+import test, { suite } from "node:test";
 import { expect } from "@infra-blocks/test";
 import { trusted, unreachable } from "../../src/index.js";
+import { funcTests } from "./func.js";
+import { guardTests } from "./guard.js";
+import { predicateTests } from "./predicates.js";
+import { typeTests } from "./types.js";
 
-// Most of the The tests here just showcase the good use cases when it compiles.
-// So the test don't actually do much besides showing compilation.
-describe("types", () => {
-  describe(trusted.name, () => {
-    it("should work with the example", () => {
+suite("suite", () => {
+  funcTests();
+  guardTests();
+  predicateTests();
+  typeTests();
+
+  suite(trusted.name, () => {
+    test("should work with the example", () => {
       type BullshitType = {
         contentz?: string;
       };
@@ -16,12 +24,14 @@ describe("types", () => {
       content.toUpperCase();
     });
   });
-  describe(unreachable.name, () => {
-    it("should throw when called", () => {
+
+  suite(unreachable.name, () => {
+    test("should throw when called", () => {
       // @ts-expect-error "coucou" cannot be assigned to never.
       expect(() => unreachable("coucou")).to.throw();
     });
-    it("should enforce exhaustiveness in switch statements", () => {
+
+    test("should enforce exhaustiveness in switch statements", () => {
       type BigType = "penus" | "penii";
       function doStuff(x: BigType) {
         switch (x) {
