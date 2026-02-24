@@ -67,6 +67,11 @@ export type Optional<T, K extends keyof T = keyof T> = Partial<Pick<T, K>> &
   Omit<T, K>;
 
 /**
+ * A utility type for tracking a phantom type parameter.
+ */
+export type Phantom<T> = { _phantom?: T };
+
+/**
  * A union type that includes all primitive types.
  */
 export type Primitive =
