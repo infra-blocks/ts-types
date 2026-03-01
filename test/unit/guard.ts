@@ -1,9 +1,11 @@
-import test, { suite } from "node:test";
-import { expect } from "@infra-blocks/test";
+import assert from "node:assert";
+import { suite, test } from "node:test";
+import { expect, expectTypeOf } from "@infra-blocks/test";
 import {
   isBigint,
   isBoolean,
   isFunction,
+  isNonNullable,
   isNull,
   isNumber,
   isObject,
@@ -89,6 +91,39 @@ export const guardTests = () => {
 
         const instance = new Toto();
         expect(isFunction(instance.sayWhat.bind(instance))).to.be.true;
+      });
+    });
+
+    suite(isNonNullable.name, () => {
+      test("should return false for undefined", () => {
+        const value = undefined;
+        assert(!isNonNullable(value));
+        expectTypeOf(value).toBeUndefined();
+      });
+
+      test("should return false for null", () => {
+        const value = null;
+        assert(!isNonNullable(value));
+        expectTypeOf(value).toBeNull();
+      });
+
+      test("should return true for a number", () => {
+        const value: number | undefined | null = 42;
+        assert(isNonNullable(value));
+        expectTypeOf(value).toEqualTypeOf<number>();
+      });
+
+      // Double checking it's not a truthy test.
+      test("should return true for a false", () => {
+        const value: boolean | undefined | null = false;
+        assert(isNonNullable(value));
+        expectTypeOf(value).toEqualTypeOf<boolean>();
+      });
+
+      test("should return true for an empty object", () => {
+        const value: Record<PropertyKey, never> | undefined | null = {};
+        assert(isNonNullable(value));
+        expectTypeOf(value).toEqualTypeOf<Record<PropertyKey, never>>();
       });
     });
 
