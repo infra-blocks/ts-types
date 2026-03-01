@@ -8,8 +8,6 @@ import type { Primitive } from "./types.js";
  * @param value - The value to test.
  *
  * @returns Whether or not the value is a bigint.
- *
- * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
 export function isBigint(value: unknown): value is bigint {
   return typeof value === "bigint";
@@ -23,8 +21,6 @@ export function isBigint(value: unknown): value is bigint {
  * @param value - The value to test.
  *
  * @returns Whether or not the value is a boolean.
- *
- * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
 export function isBoolean(value: unknown): value is boolean {
   return typeof value === "boolean";
@@ -38,12 +34,23 @@ export function isBoolean(value: unknown): value is boolean {
  * @param value - The value to test.
  *
  * @returns Whether or not the value is a function.
- *
- * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
 // biome-ignore lint/complexity/noBannedTypes: Function is the correct type here.
 export function isFunction(value: unknown): value is Function {
   return typeof value === "function";
+}
+
+/**
+ * A type guard to assess that a value is {@link NonNullable}.
+ *
+ * The function uses `!= null` to validate the input, conforming to the {@link NonNullable} type.
+ *
+ * @param value - The value to test.
+ *
+ * @returns Whether or not the value is non nullable.
+ */
+export function isNonNullable<T>(value: T): value is NonNullable<T> {
+  return value != null;
 }
 
 /**
@@ -54,8 +61,6 @@ export function isFunction(value: unknown): value is Function {
  * @param value - The value to test.
  *
  * @returns Whether or not the value is a number.
- *
- * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
 export function isNumber(value: unknown): value is number {
   return typeof value === "number";
@@ -69,8 +74,6 @@ export function isNumber(value: unknown): value is number {
  * @param value - The value to test.
  *
  * @returns Whether or not the value is null.
- *
- * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
 export function isNull(value: unknown): value is null {
   return value === null;
@@ -85,8 +88,6 @@ export function isNull(value: unknown): value is null {
  * @param value - The value to test.
  *
  * @returns Whether or not the value is an object.
- *
- * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
 export function isObject(value: unknown): value is object | null {
   return typeof value === "object";
@@ -103,7 +104,6 @@ export function isObject(value: unknown): value is object | null {
  * @returns Whether or not the value is an object and not null.
  *
  * @see isObject
- * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
 export function isObjectNotNull(value: unknown): value is object {
   return !isNull(value) && typeof value === "object";
@@ -128,7 +128,6 @@ export function isObjectNotNull(value: unknown): value is object {
  * @see isString
  * @see isSymbol
  * @see isUndefined
- * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
 export function isPrimitive(value: unknown): value is Primitive {
   return (
@@ -150,8 +149,6 @@ export function isPrimitive(value: unknown): value is Primitive {
  * @param value - The value to test.
  *
  * @returns Whether or not the value is a string.
- *
- * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
 export function isString(value: unknown): value is string {
   return typeof value === "string";
@@ -165,8 +162,6 @@ export function isString(value: unknown): value is string {
  * @param value - The value to test.
  *
  * @returns Whether or not the value is a symbol.
- *
- * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
 export function isSymbol(value: unknown): value is symbol {
   return typeof value === "symbol";
@@ -180,8 +175,6 @@ export function isSymbol(value: unknown): value is symbol {
  * @param value - The value to test.
  *
  * @returns Whether or not the value is undefined.
- *
- * @see https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
  */
 export function isUndefined(value: unknown): value is undefined {
   return typeof value === "undefined";
