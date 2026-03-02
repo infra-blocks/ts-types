@@ -19,6 +19,13 @@ export type MapKeys<K, V> = {
 };
 
 /**
+ * Extracts the optional keys of a given type.
+ */
+export type OptionalKeys<T> = keyof {
+  [Key in keyof T as Omit<T, Key> extends T ? Key : never]: T[Key];
+};
+
+/**
  * A type utility useful to constrain types to have the same keys as M, without imposing
  * restrictions on the value.
  *
