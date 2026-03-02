@@ -1,6 +1,11 @@
 import { suite, test } from "node:test";
 import { expectTypeOf } from "@infra-blocks/test";
-import type { ExtendingKeys, MapKeys, OptionalKeys } from "../../src/index.js";
+import type {
+  ExtendingKeys,
+  MapKeys,
+  OptionalKeys,
+  RequiredKeys,
+} from "../../src/index.js";
 
 export const keysTests = () => {
   suite("keys", () => {
@@ -55,11 +60,16 @@ export const keysTests = () => {
   });
 
   suite("OptionalKeys", () => {
+    test("should resolve to never on empty type", () => {
+      const x = {};
+      expectTypeOf<OptionalKeys<typeof x>>().toBeNever();
+    });
+
     test("should resolve to never when no optional keys are present", () => {
       expectTypeOf<OptionalKeys<{ x: number }>>().toBeNever();
     });
 
-    test("should not include keys whose type includes undefined", () => {
+    test("should not include required keys whose type includes undefined", () => {
       expectTypeOf<
         OptionalKeys<{ x: undefined; y: number | undefined }>
       >().toBeNever();
@@ -69,6 +79,39 @@ export const keysTests = () => {
       expectTypeOf<
         OptionalKeys<{ x?: string; y?: string; z: string | undefined }>
       >().toEqualTypeOf<"x" | "y">();
+    });
+
+    test("should resolve to key type on record type", () => {
+      expectTypeOf<
+        OptionalKeys<Record<PropertyKey, unknown>>
+      >().toEqualTypeOf<PropertyKey>();
+    });
+  });
+
+  suite("RequiredKeys", () => {
+    test("should resolve to never on empty type", () => {
+      const x = {};
+      expectTypeOf<RequiredKeys<typeof x>>().toBeNever();
+    });
+
+    test("should resolve to never on record type", () => {
+      expectTypeOf<RequiredKeys<Record<PropertyKey, unknown>>>().toBeNever();
+    });
+
+    test("should resolve to never when no required keys are present", () => {
+      expectTypeOf<RequiredKeys<{ x?: number }>>().toBeNever();
+    });
+
+    test("should include keys whose type includes undefined", () => {
+      expectTypeOf<
+        RequiredKeys<{ x: undefined; y: number | undefined }>
+      >().toEqualTypeOf<"x" | "y">();
+    });
+
+    test("should include required keys only", () => {
+      expectTypeOf<
+        RequiredKeys<{ x?: string; y?: string; z: string | undefined }>
+      >().toEqualTypeOf<"z">();
     });
   });
 };
