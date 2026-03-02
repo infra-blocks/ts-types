@@ -22,7 +22,14 @@ export type MapKeys<K, V> = {
  * Extracts the optional keys of a given type.
  */
 export type OptionalKeys<T> = keyof {
-  [Key in keyof T as Omit<T, Key> extends T ? Key : never]: T[Key];
+  [Key in keyof T as Omit<T, Key> extends T ? Key : never]: Key;
+};
+
+/**
+ * Extracts the required keys of a given type.
+ */
+export type RequiredKeys<T> = keyof {
+  [Key in keyof T as Omit<T, Key> extends T ? never : Key]: Key;
 };
 
 /**
