@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.29.0] - 2026-03-02
+
+### Added
+
+- `ExtendingKeys`, which is basically a working replacement of `KeyOfType`. The latter
+had a bug described below, and the former conforms better to the current naming convention
+surrounding key types.
+
+### Removed
+
+- Removed `KeyOfType` as it had a nasty bug in it with optional properties. The test did not
+cover an object with optional properties. In the previous implementation, if a type had an
+object with an optional property, then `undefined` might have been part of the result. See
+https://github.com/microsoft/TypeScript/issues/34992
+
 ## [0.28.0] - 2026-03-01
 
 ### Added
@@ -298,6 +313,8 @@ that does the same, but probably better.
   - `isNumber`
   - `isFunction`
 
+[0.27.0]: https://github.com/infra-blocks/ts-types/compare/v0.28.0...v0.29.0
+[0.28.0]: https://github.com/infra-blocks/ts-types/compare/v0.27.0...v0.28.0
 [0.27.0]: https://github.com/infra-blocks/ts-types/compare/v0.26.0...v0.27.0
 [0.26.0]: https://github.com/infra-blocks/ts-types/compare/v0.25.0...v0.26.0
 [0.25.0]: https://github.com/infra-blocks/ts-types/compare/v0.24.0...v0.25.0

@@ -35,36 +35,11 @@ export type EnvironmentVariables = Record<string, string | undefined>;
 export type EnvVars = EnvironmentVariables;
 
 /**
- * A convenience type mapping to extract keys of a type that are of a given type.
- *
- * For example, if you would like all the types of an object that are numbers, you could do
- * KeyOfType<TheType, number>
- */
-export type KeyOfType<T, U> = {
-  [P in keyof T]: T[P] extends U ? P : never;
-}[keyof T];
-
-/**
- * A mapped type remapping all keys of K to type V.
- */
-export type MapKeys<K, V> = {
-  [k in keyof K]: V;
-};
-
-/**
  * Convenient type alias to regroup a type that can be T, null or undefined.
  *
  * Semantically the opposite of {@link NonNullable}.
  */
 export type Nullable<T> = T | null | undefined;
-
-/**
- * Convenient mapped type to selectively make some fields of a type optional.
- *
- * This is in contrast to the built-in `Partial` type which makes all fields optional.
- */
-export type Optional<T, K extends keyof T = keyof T> = Partial<Pick<T, K>> &
-  Omit<T, K>;
 
 /**
  * A utility type for tracking a phantom type parameter.
@@ -82,15 +57,6 @@ export type Primitive =
   | string
   | symbol
   | undefined;
-
-/**
- * A type utility useful to constrain types to have the same keys as M, without imposing
- * restrictions on the value.
- *
- * It's an alias for MapKeys<M, unknown>.
- */
-// TODO: write a good minimal test for this type.
-export type SameKeys<M> = MapKeys<M, unknown>;
 
 /**
  * A type representing all types that can be used in a vanilla template literal.
