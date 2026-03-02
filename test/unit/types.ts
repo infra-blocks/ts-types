@@ -4,9 +4,6 @@ import {
   type Brand,
   type EnvironmentVariables,
   isString,
-  type KeyOfType,
-  type MapKeys,
-  type Optional,
   type Phantom,
   type Primitive,
   type TemplateExpression,
@@ -59,82 +56,6 @@ export const typeTests = () => {
       test("should work for process.env", () => {
         const env: EnvironmentVariables = process.env;
         expect(env).to.be.an("object");
-      });
-    });
-
-    suite("KeyOfType", () => {
-      interface TestType {
-        firstName: string;
-        lastName: string;
-        x: number;
-        y: number;
-        z: number;
-        getAge: () => number;
-        getStuff: () => string;
-      }
-
-      test("should compile with keys of type number", () => {
-        const func = (arg: KeyOfType<TestType, number>): string => arg;
-        // Those are the only values for which it compiles.
-        func("x");
-        func("y");
-        func("z");
-        // @ts-expect-error firstName is not a number.
-        func("firstName");
-        // @ts-expect-error lastName is not a number.
-        func("lastName");
-        // @ts-expect-error getAge is not a number.
-        func("getAge");
-        // @ts-expect-error getStuff is not a number.
-        func("getStuff");
-      });
-    });
-
-    suite("MapKeys", () => {
-      interface TestType {
-        firstName: string;
-        lastName: string;
-        x: number;
-        y: number;
-        z: number;
-        getAge: () => number;
-        getStuff: () => string;
-      }
-
-      test("should remap all keys", () => {
-        type MappedType = MapKeys<TestType, Date>;
-        // Any key returns a date.
-        const _func = <K extends keyof MappedType>(m: MappedType, k: K): Date =>
-          m[k];
-      });
-    });
-
-    suite("Optional", () => {
-      interface MyType {
-        one: number;
-        two: string;
-        three: boolean;
-      }
-
-      test("should work with subset of fields", () => {
-        const myStuff: Optional<MyType, "one" | "two"> = {
-          one: 1,
-          three: true,
-        };
-        // @ts-expect-error one can be undefined.
-        const _one: number = myStuff.one;
-        // @ts-expect-error two can be undefined.
-        const _two: string = myStuff.two;
-        // This is fine because three is not optional.
-        const _three: boolean = myStuff.three;
-      });
-      test("should not compile with a field that is not a key", () => {
-        // @ts-expect-error four is not a key of MyType.
-        const _myStuff: Optional<MyType, "four"> = {
-          one: 1,
-          two: "two",
-          three: true,
-        };
       });
     });
 
