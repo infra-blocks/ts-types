@@ -1,4 +1,10 @@
 /**
+ * A convenience type to constrain generics on types and interfaces.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: Record<K, any> is compatible with interface types, whereas Record<K, unknown> isn't.
+export type AnyRecord<K extends PropertyKey = PropertyKey> = Record<K, any>;
+
+/**
  * The unique symbol used for branding types.
  */
 export const brand: unique symbol = Symbol("__brand");
@@ -19,9 +25,7 @@ export const brand: unique symbol = Symbol("__brand");
  * }
  * ```
  */
-export type Brand<
-  T extends string | number | symbol = string | number | symbol,
-> = {
+export type Brand<T extends PropertyKey = PropertyKey> = {
   [brand]: { [k in T]: true };
 };
 

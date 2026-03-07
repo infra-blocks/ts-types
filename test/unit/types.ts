@@ -1,6 +1,7 @@
 import test, { suite } from "node:test";
 import { expect, expectTypeOf } from "@infra-blocks/test";
 import {
+  type AnyRecord,
   type Brand,
   type EnvironmentVariables,
   isString,
@@ -15,6 +16,50 @@ import {
 
 export const typeTests = () => {
   suite("types", () => {
+    suite("AnyRecord", () => {
+      test("should not compile with number", () => {
+        expectTypeOf<number>().not.toExtend<AnyRecord>();
+      });
+
+      test("should not compile with null", () => {
+        expectTypeOf<null>().not.toExtend<AnyRecord>();
+      });
+
+      test("should not compile with undefined", () => {
+        expectTypeOf<undefined>().not.toExtend<AnyRecord>();
+      });
+
+      test("should compile with empty object literal", () => {
+        expectTypeOf({}).toExtend<AnyRecord>();
+      });
+
+      test("should compile with an interface", () => {
+        interface Test {
+          toto: string;
+        }
+        expectTypeOf<Test>().toExtend<AnyRecord>();
+      });
+
+      test("should compile with a type", () => {
+        type Test = {
+          toto: string;
+        };
+        expectTypeOf<Test>().toExtend<AnyRecord>();
+      });
+
+      test("should compile with a class", () => {
+        class Test {
+          readonly toto: string = "toto";
+        }
+        expectTypeOf<Test>().toExtend<AnyRecord>();
+      });
+
+      test("should compile with a record type", () => {
+        type Test = Record<string, number>;
+        expectTypeOf<Test>().toExtend<AnyRecord>();
+      });
+    });
+
     suite("Brand", () => {
       test("should work as expected with a string brand", () => {
         type UserId = string & Brand<"UserId">;
