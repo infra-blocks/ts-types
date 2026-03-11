@@ -3,12 +3,12 @@ import { expect, expectTypeOf } from "@infra-blocks/test";
 import {
   type AnyRecord,
   type Brand,
-  type Defined,
   type EnvironmentVariables,
   isString,
   type Nil,
   type NotNil,
   type NotNull,
+  type NotUndefined,
   type Phantom,
   type Primitive,
   type TemplateExpression,
@@ -101,38 +101,6 @@ export const typeTests = () => {
       });
     });
 
-    suite("Defined", () => {
-      test("should work without undefined", () => {
-        expectTypeOf<Defined<number>>().toEqualTypeOf<number>();
-      });
-
-      test("should work with number | undefined", () => {
-        expectTypeOf<Defined<number | undefined>>().toEqualTypeOf<number>();
-      });
-
-      test("should work on an optional field", () => {
-        type Test = {
-          optional?: number;
-        };
-        expectTypeOf<Defined<Test["optional"]>>().toEqualTypeOf<number>();
-      });
-
-      test("should work with an optional field that can be undefined", () => {
-        type Test = {
-          optional?: number | undefined;
-        };
-        expectTypeOf<Defined<Test["optional"]>>().toEqualTypeOf<number>();
-      });
-
-      test("should work transitively", () => {
-        type First = number | undefined;
-        type Second = First | string | undefined;
-        type Test = Second | undefined;
-
-        expectTypeOf<Defined<Test>>().toEqualTypeOf<number | string>();
-      });
-    });
-
     suite("EnvVars", () => {
       test("should work for process.env", () => {
         const env: EnvironmentVariables = process.env;
@@ -187,6 +155,46 @@ export const typeTests = () => {
       test("should *not* exclude undefined from a type", () => {
         expectTypeOf<NotNull<number | undefined | string>>().toEqualTypeOf<
           number | string | undefined
+        >();
+      });
+    });
+
+    suite("NotUndefined", () => {
+      test("should work without unNotUndefined", () => {
+        expectTypeOf<NotUndefined<number>>().toEqualTypeOf<number>();
+      });
+
+      test("should work with number | unNotUndefined", () => {
+        expectTypeOf<
+          NotUndefined<number | undefined>
+        >().toEqualTypeOf<number>();
+      });
+
+      test("should work on an optional field", () => {
+        type Test = {
+          optional?: number;
+        };
+        expectTypeOf<NotUndefined<Test["optional"]>>().toEqualTypeOf<number>();
+      });
+
+      test("should work with an optional field that can be unNotUndefined", () => {
+        type Test = {
+          optional?: number | undefined;
+        };
+        expectTypeOf<NotUndefined<Test["optional"]>>().toEqualTypeOf<number>();
+      });
+
+      test("should work transitively", () => {
+        type First = number | undefined;
+        type Second = First | string | undefined;
+        type Test = Second | undefined;
+
+        expectTypeOf<NotUndefined<Test>>().toEqualTypeOf<number | string>();
+      });
+
+      test("should *not* exlude null from type", () => {
+        expectTypeOf<NotUndefined<number | null>>().toEqualTypeOf<
+          number | null
         >();
       });
     });

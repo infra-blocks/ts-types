@@ -30,7 +30,7 @@ export type Brand<T extends PropertyKey = PropertyKey> = {
 };
 
 /**
- * Excludes `undefined` from `T`.
+ * A type alias for {@link NotUndefined}, because double negation sucks azz.
  */
 export type Defined<T> = Exclude<T, undefined>;
 
@@ -62,6 +62,11 @@ export type NotNil<T> = NonNullable<T>;
  * A type utility excluding `null` from `T`.
  */
 export type NotNull<T> = Exclude<T, null>;
+
+/**
+ * Excludes `undefined` from `T`.
+ */
+export type NotUndefined<T> = Exclude<T, undefined>;
 
 /**
  * A utility type for tracking a phantom type parameter.
