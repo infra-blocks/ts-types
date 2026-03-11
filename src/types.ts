@@ -59,13 +59,6 @@ export type Nil = null | undefined;
 export type NotNil<T> = NonNullable<T>;
 
 /**
- * Convenient type alias to regroup a type that can be T, null or undefined.
- *
- * Semantically the opposite of {@link NonNullable}.
- */
-export type Nullable<T> = T | null | undefined;
-
-/**
  * A utility type for tracking a phantom type parameter.
  */
 export type Phantom<T> = { _phantom?: T };

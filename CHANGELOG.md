@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This is an alias for `NonNullable`. It's shorter, plays well with `es-toolkit`'s
 terminology, and follows `@infra-blocks` naming conventions.
 
+### Removed
+
+- The `Nullable` type. It conflicts with the new `nil` terminology and can easily
+be replaced by `T | Nil`.
+
 ## [0.32.0] - 2026-03-07
 
 ### Added
@@ -343,6 +348,7 @@ that does the same, but probably better.
   - `isNumber`
   - `isFunction`
 
+[0.33.0]: https://github.com/infra-blocks/ts-types/compare/v0.32.0...v0.33.0
 [0.32.0]: https://github.com/infra-blocks/ts-types/compare/v0.31.0...v0.32.0
 [0.31.0]: https://github.com/infra-blocks/ts-types/compare/v0.30.0...v0.31.0
 [0.30.0]: https://github.com/infra-blocks/ts-types/compare/v0.29.0...v0.30.0
