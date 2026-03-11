@@ -7,6 +7,7 @@ import {
   type EnvironmentVariables,
   isString,
   type Nil,
+  type NotNil,
   type Phantom,
   type Primitive,
   type TemplateExpression,
@@ -150,6 +151,24 @@ export const typeTests = () => {
     suite("Nil", () => {
       test("should be as expected", () => {
         expectTypeOf<Nil>().toEqualTypeOf<null | undefined>();
+      });
+    });
+
+    suite("NotNil", () => {
+      test("should work with a non nil type", () => {
+        expectTypeOf<NotNil<number>>().toEqualTypeOf<number>();
+      });
+
+      test("should exclude null from a type", () => {
+        expectTypeOf<NotNil<number | null | string>>().toEqualTypeOf<
+          number | string
+        >();
+      });
+
+      test("should exclude undefined from a type", () => {
+        expectTypeOf<NotNil<number | undefined | string>>().toEqualTypeOf<
+          number | string
+        >();
       });
     });
 

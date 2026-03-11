@@ -50,6 +50,15 @@ export type EnvVars = EnvironmentVariables;
 export type Nil = null | undefined;
 
 /**
+ * A type utility excluding `null` and `undefined` from `T`.
+ *
+ * This is an alias for the built-in `NonNullable` utility type. It is only provided
+ * so that calling code can revolve around the same naming conventions with regards
+ * to `null | undefined` types.
+ */
+export type NotNil<T> = NonNullable<T>;
+
+/**
  * Convenient type alias to regroup a type that can be T, null or undefined.
  *
  * Semantically the opposite of {@link NonNullable}.
