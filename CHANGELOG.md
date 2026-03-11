@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The `NotNil` type, which strips out `null` and `undefined` from any type `T`.
 This is an alias for `NonNullable`. It's shorter, plays well with `es-toolkit`'s
 terminology, and follows `@infra-blocks` naming conventions.
+- The `NotNull` type, which strips out `null` from any type `T`.
 
 ### Removed
 

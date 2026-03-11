@@ -59,6 +59,11 @@ export type Nil = null | undefined;
 export type NotNil<T> = NonNullable<T>;
 
 /**
+ * A type utility excluding `null` from `T`.
+ */
+export type NotNull<T> = Exclude<T, null>;
+
+/**
  * A utility type for tracking a phantom type parameter.
  */
 export type Phantom<T> = { _phantom?: T };

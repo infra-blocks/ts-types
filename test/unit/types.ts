@@ -8,6 +8,7 @@ import {
   isString,
   type Nil,
   type NotNil,
+  type NotNull,
   type Phantom,
   type Primitive,
   type TemplateExpression,
@@ -168,6 +169,24 @@ export const typeTests = () => {
       test("should exclude undefined from a type", () => {
         expectTypeOf<NotNil<number | undefined | string>>().toEqualTypeOf<
           number | string
+        >();
+      });
+    });
+
+    suite("NotNull", () => {
+      test("should work with a non null type", () => {
+        expectTypeOf<NotNull<number>>().toEqualTypeOf<number>();
+      });
+
+      test("should exclude null from a type", () => {
+        expectTypeOf<NotNull<number | null | string>>().toEqualTypeOf<
+          number | string
+        >();
+      });
+
+      test("should *not* exclude undefined from a type", () => {
+        expectTypeOf<NotNull<number | undefined | string>>().toEqualTypeOf<
+          number | string | undefined
         >();
       });
     });
