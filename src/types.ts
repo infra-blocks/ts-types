@@ -30,6 +30,11 @@ export type Brand<T extends PropertyKey = PropertyKey> = {
 };
 
 /**
+ * Excludes `undefined` from `T`.
+ */
+export type Defined<T> = Exclude<T, undefined>;
+
+/**
  * Convenience type to represent environment variables.
  */
 export type EnvironmentVariables = Record<string, string | undefined>;

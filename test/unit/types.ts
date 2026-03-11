@@ -3,6 +3,7 @@ import { expect, expectTypeOf } from "@infra-blocks/test";
 import {
   type AnyRecord,
   type Brand,
+  type Defined,
   type EnvironmentVariables,
   isString,
   type Phantom,
@@ -94,6 +95,38 @@ export const typeTests = () => {
         let _branded: UserId = plain;
         // @ts-expect-error cannot assign a plain string to a branded type.
         _branded = plain as OrderId;
+      });
+    });
+
+    suite("Defined", () => {
+      test("should work without undefined", () => {
+        expectTypeOf<Defined<number>>().toEqualTypeOf<number>();
+      });
+
+      test("should work with number | undefined", () => {
+        expectTypeOf<Defined<number | undefined>>().toEqualTypeOf<number>();
+      });
+
+      test("should work on an optional field", () => {
+        type Test = {
+          optional?: number;
+        };
+        expectTypeOf<Defined<Test["optional"]>>().toEqualTypeOf<number>();
+      });
+
+      test("should work with an optional field that can be undefined", () => {
+        type Test = {
+          optional?: number | undefined;
+        };
+        expectTypeOf<Defined<Test["optional"]>>().toEqualTypeOf<number>();
+      });
+
+      test("should work transitively", () => {
+        type First = number | undefined;
+        type Second = First | string | undefined;
+        type Test = Second | undefined;
+
+        expectTypeOf<Defined<Test>>().toEqualTypeOf<number | string>();
       });
     });
 
