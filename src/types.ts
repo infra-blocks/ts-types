@@ -30,6 +30,11 @@ export type Brand<T extends PropertyKey = PropertyKey> = {
 };
 
 /**
+ * A type alias for {@link NotUndefined}, because double negation sucks azz.
+ */
+export type Defined<T> = Exclude<T, undefined>;
+
+/**
  * Convenience type to represent environment variables.
  */
 export type EnvironmentVariables = Record<string, string | undefined>;
@@ -39,11 +44,29 @@ export type EnvironmentVariables = Record<string, string | undefined>;
 export type EnvVars = EnvironmentVariables;
 
 /**
- * Convenient type alias to regroup a type that can be T, null or undefined.
- *
- * Semantically the opposite of {@link NonNullable}.
+ * A type representing nil types, also known as "nullable" types in Typescript
+ * utility types terminology.
  */
-export type Nullable<T> = T | null | undefined;
+export type Nil = null | undefined;
+
+/**
+ * A type utility excluding `null` and `undefined` from `T`.
+ *
+ * This is an alias for the built-in `NonNullable` utility type. It is only provided
+ * so that calling code can revolve around the same naming conventions with regards
+ * to `null | undefined` types.
+ */
+export type NotNil<T> = NonNullable<T>;
+
+/**
+ * A type utility excluding `null` from `T`.
+ */
+export type NotNull<T> = Exclude<T, null>;
+
+/**
+ * Excludes `undefined` from `T`.
+ */
+export type NotUndefined<T> = Exclude<T, undefined>;
 
 /**
  * A utility type for tracking a phantom type parameter.
