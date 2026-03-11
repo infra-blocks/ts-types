@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - The `Defined` type which strips out `undefined` from any type `T`.
+- The `Nil` type, a union of `null | undefined`.
 
 ## [0.32.0] - 2026-03-07
 

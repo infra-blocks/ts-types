@@ -44,6 +44,12 @@ export type EnvironmentVariables = Record<string, string | undefined>;
 export type EnvVars = EnvironmentVariables;
 
 /**
+ * A type representing nil types, also known as "nullable" types in Typescript
+ * utility types terminology.
+ */
+export type Nil = null | undefined;
+
+/**
  * Convenient type alias to regroup a type that can be T, null or undefined.
  *
  * Semantically the opposite of {@link NonNullable}.

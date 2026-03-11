@@ -6,6 +6,7 @@ import {
   type Defined,
   type EnvironmentVariables,
   isString,
+  type Nil,
   type Phantom,
   type Primitive,
   type TemplateExpression,
@@ -143,6 +144,12 @@ export const typeTests = () => {
         const _: MyType<number> = {
           greet: () => "hello",
         };
+      });
+    });
+
+    suite("Nil", () => {
+      test("should be as expected", () => {
+        expectTypeOf<Nil>().toEqualTypeOf<null | undefined>();
       });
     });
 
