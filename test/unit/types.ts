@@ -1,22 +1,21 @@
 import test, { suite } from "node:test";
 import { expect, expectTypeOf } from "@infra-blocks/test";
-import {
-  type AnyRecord,
-  type Brand,
-  type EmptyObject,
-  type EnvironmentVariables,
-  isString,
-  type Nil,
-  type NotNil,
-  type NotNull,
-  type NotUndefined,
-  type Phantom,
-  type Primitive,
-  type TemplateExpression,
-  type TransitivePartial,
-  type UnpackedArray,
-  type WithPartial,
-  type WithRequired,
+import type {
+  AnyRecord,
+  Brand,
+  EmptyObject,
+  EnvironmentVariables,
+  Nil,
+  NotNil,
+  NotNull,
+  NotUndefined,
+  Phantom,
+  Primitive,
+  TemplateExpression,
+  TransitivePartial,
+  UnpackedArray,
+  WithPartial,
+  WithRequired,
 } from "../../src/index.js";
 
 export const typeTests = () => {
@@ -334,9 +333,7 @@ export const typeTests = () => {
 
     suite("UnpackedArray", () => {
       test("should work for an array of string", () => {
-        const array = ["one", "two", "three"];
-        const myStuff: UnpackedArray<typeof array> = "four";
-        isString(myStuff);
+        expectTypeOf<UnpackedArray<string[]>>().toEqualTypeOf<string>();
       });
     });
 
