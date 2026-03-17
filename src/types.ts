@@ -35,6 +35,29 @@ export type Brand<T extends PropertyKey = PropertyKey> = {
 export type Defined<T> = Exclude<T, undefined>;
 
 /**
+ * A type alias for an empty object.
+ *
+ * Usage of '{}' as a type is frowned upon by linters, as it is misleading.
+ * It actually means any 'non nullish value'.
+ *
+ * However, modeling empty objects can be incredibly useful while building
+ * conditional types, and particularly while building intersection types.
+ * This is true since the empty object is neutral in an intersection:
+ * `{ toto: string } & {} = { toto: string }`.
+ *
+ * This is where this type comes in. It replaces the empty object for those
+ * purposes.
+ *
+ * @example
+ * // Linters don't like this.
+ * type BadResult<T> = (T extends string ? { isString: true } : {}) & (T extends number ? { isNumber: true} : {});
+ * // Linters love this shit.
+ * import { Empty } from "@infra-blocks/types";
+ * type GoodResult<T> = (T extends string ? { isString: true } : Empty) & (T extends number ? { isNumber: true} : Empty);
+ */
+export type EmptyObject = Record<never, never>;
+
+/**
  * Convenience type to represent environment variables.
  */
 export type EnvironmentVariables = Record<string, string | undefined>;

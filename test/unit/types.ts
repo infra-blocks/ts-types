@@ -3,6 +3,7 @@ import { expect, expectTypeOf } from "@infra-blocks/test";
 import {
   type AnyRecord,
   type Brand,
+  type EmptyObject,
   type EnvironmentVariables,
   isString,
   type Nil,
@@ -98,6 +99,28 @@ export const typeTests = () => {
         let _branded: UserId = plain;
         // @ts-expect-error cannot assign a plain string to a branded type.
         _branded = plain as OrderId;
+      });
+    });
+
+    suite("Empty", () => {
+      test("should not compile for undefined", () => {
+        expectTypeOf<undefined>().not.toExtend<EmptyObject>();
+      });
+      test("should not compile for null", () => {
+        expectTypeOf<null>().not.toExtend<EmptyObject>();
+      });
+      test("should allow an empty object", () => {
+        expectTypeOf({}).toExtend<EmptyObject>();
+      });
+      test("should work with the provided example", () => {
+        type GoodResult<T> = (T extends string
+          ? { isString: true }
+          : EmptyObject) &
+          (T extends number ? { isNumber: true } : EmptyObject);
+
+        expectTypeOf<GoodResult<string>>().branded.toEqualTypeOf<{
+          isString: true;
+        }>();
       });
     });
 
