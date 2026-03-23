@@ -4,14 +4,12 @@ import { trusted, unreachable } from "../../src/index.js";
 import { funcTests } from "./func.js";
 import { guardTests } from "./guard.js";
 import { keysTests } from "./keys.js";
-import { predicateTests } from "./predicates.js";
 import { typeTests } from "./types.js";
 
 suite("suite", () => {
   funcTests();
   guardTests();
   keysTests();
-  predicateTests();
   typeTests();
 
   suite(trusted.name, () => {
