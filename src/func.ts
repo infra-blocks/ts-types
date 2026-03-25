@@ -16,7 +16,8 @@ export type AbstractConstructor<
 /**
  * The async flavor of {@link Factory}.
  */
-export type AsyncFactory<P extends unknown[], R> = (...params: P) => Promise<R>;
+// biome-ignore lint/suspicious/noExplicitAny: see Factory
+export type AsyncFactory<R, P extends any[] = any[]> = Factory<Promise<R>, P>;
 
 /**
  * The async flavor of {@link Parser}.
@@ -62,7 +63,11 @@ export type ErrorHandler<T = unknown> = (err: T) => void;
 /**
  * A type alias for a function that creates objects of a given type.
  */
-export type Factory<P extends unknown[], R> = (...params: P) => R;
+/*
+biome-ignore lint/suspicious/noExplicitAny: any allows every function that returns T to extend Factory<T>.
+This isn't true for unknown[], for example.
+*/
+export type Factory<R, P extends any[] = any[]> = (...params: P) => R;
 
 /**
  * A type alias for parser functions.

@@ -1,5 +1,4 @@
-import test, { suite } from "node:test";
-import { expect } from "@infra-blocks/test";
+import { suite, test } from "node:test";
 import { expectTypeOf } from "expect-type";
 import type {
   AbstractConstructor,
@@ -178,29 +177,48 @@ export const funcTests = () => {
     });
 
     suite("Factory", () => {
-      test("should compile for a function with parameters", () => {
-        const func: Factory<[number, string], object> = (left, right) => ({
-          twice: left * 2,
-          greet: `Hello, ${right}!`,
-        });
-        expect(func(2, "t1t")).to.deep.equal({
-          twice: 4,
-          greet: "Hello, t1t!",
-        });
+      test("should accept no parameter by default", () => {
+        expectTypeOf<() => string>().toExtend<Factory<string>>();
+      });
+
+      test("should compile while returning a promise", () => {
+        expectTypeOf<() => Promise<string>>().toExtend<
+          Factory<Promise<string>>
+        >();
+      });
+
+      test("should accept any parameters by default", () => {
+        expectTypeOf<(x: number, y: string) => Date>().toExtend<
+          Factory<Date>
+        >();
+      });
+
+      test("should compile with specific parameters", () => {
+        expectTypeOf<(x: number, y: string) => Date>().toEqualTypeOf<
+          Factory<Date, [number, string]>
+        >();
       });
     });
 
     suite("AsyncFactory", () => {
-      test("should compile for an function with parameters", () => {
-        const func: AsyncFactory<[number, string], object> = (left, right) =>
-          Promise.resolve({
-            thrice: left * 3,
-            greet: `Hello, ${right}!`,
-          });
-        expect(func(2, "tw4t")).to.eventually.deep.equal({
-          thrice: 6,
-          greet: "Hello, tw4t!",
-        });
+      test("should not compile if not returning a promise", () => {
+        expectTypeOf<() => string>().not.toExtend<AsyncFactory<string>>();
+      });
+
+      test("should accept no parameter by default", () => {
+        expectTypeOf<() => Promise<string>>().toExtend<AsyncFactory<string>>();
+      });
+
+      test("should accept any parameters by default", () => {
+        expectTypeOf<(x: number, y: string) => Promise<Date>>().toExtend<
+          AsyncFactory<Date>
+        >();
+      });
+
+      test("should compile with specific parameters", () => {
+        expectTypeOf<(x: number, y: string) => Promise<Date>>().toEqualTypeOf<
+          AsyncFactory<Date, [number, string]>
+        >();
       });
     });
 

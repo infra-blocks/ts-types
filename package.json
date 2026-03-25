@@ -38,7 +38,6 @@
     "test:unit": "node --import tsx --test 'test/unit/**/*.spec.ts'"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.8",
     "@infra-blocks/test": "^0.6.0",
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
