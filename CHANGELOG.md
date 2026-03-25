@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.36.0] - 2026-03-25
+
+### Changed
+
+- Reviewed the `Factory` and `AsyncFactory` utility types. Their arguments have been
+reversed so that the first type parameter corresponds to the *return* type, which is
+typically the most important when constraining generic factories, and the parameters
+type now default to `any[]`. This allows any factory function that returns a `string`,
+for example to extend `Factory<string>`.
+
 ## [0.35.0] - 2026-03-23
 
 ### Removed
@@ -379,6 +389,7 @@ that does the same, but probably better.
   - `isNumber`
   - `isFunction`
 
+[0.36.0]: https://github.com/infra-blocks/ts-types/compare/v0.35.0...v0.36.0
 [0.35.0]: https://github.com/infra-blocks/ts-types/compare/v0.34.0...v0.35.0
 [0.34.0]: https://github.com/infra-blocks/ts-types/compare/v0.33.0...v0.34.0
 [0.33.0]: https://github.com/infra-blocks/ts-types/compare/v0.32.0...v0.33.0
